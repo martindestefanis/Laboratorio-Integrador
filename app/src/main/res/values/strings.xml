@@ -4,6 +4,6 @@
 
     <string name="navigation_drawer_open">Mostrar Opciones</string>
     <string name="navigation_drawer_close">Ocultar Opciones</string>
-
+    <string name="departamentos">Departamentos</string>
     <string name="action_settings">Configuracion</string>
 </resources>
