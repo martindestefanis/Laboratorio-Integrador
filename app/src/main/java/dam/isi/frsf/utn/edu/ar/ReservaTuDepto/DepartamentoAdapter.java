@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.laboratorio04;
+package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Departamento;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
 
 public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
     private LayoutInflater inflater;

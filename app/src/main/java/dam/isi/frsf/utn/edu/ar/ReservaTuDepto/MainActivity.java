@@ -1,10 +1,7 @@
-package dam.isi.frsf.utn.edu.ar.laboratorio04;
+package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -26,8 +23,8 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
-import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Ciudad;
-import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.FormBusqueda;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Ciudad;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.FormBusqueda;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.laboratorio04;
+package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.laboratorio04.modelo;
+package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo;
 
 import java.io.Serializable;
 import java.util.List;

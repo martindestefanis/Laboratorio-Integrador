@@ -1,15 +1,12 @@
-package dam.isi.frsf.utn.edu.ar.laboratorio04.utils;
+package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Ciudad;
-import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Departamento;
-import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.BusquedaFinalizadaListener;
-import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.FormBusqueda;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Ciudad;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
 
 /**
  * Created by martdominguez on 22/09/2016.

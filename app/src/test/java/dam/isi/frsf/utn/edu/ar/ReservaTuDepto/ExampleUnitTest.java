@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.laboratorio04;
+package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
 import org.junit.Test;
 

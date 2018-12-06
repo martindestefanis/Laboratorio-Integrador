@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.laboratorio04.utils;
+package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils;
 
 import java.util.List;
 
