@@ -1,18 +1,22 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by mdominguez on 22/09/16.
- */
 public class Reserva implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ID_RESERVA")
     private Integer id;
     private Date fechaInicio;
     private Date fechaFin;
     private Departamento departamento;
     private Double precio;
+    @Embedded(prefix = "usu_")
     private Usuario usuario;
     private Boolean confirmada;
 
@@ -71,10 +75,7 @@ public class Reserva implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-
-
     }
-
 
     public Boolean getConfirmada() {
         return confirmada;

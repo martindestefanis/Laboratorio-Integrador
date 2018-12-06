@@ -1,15 +1,19 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by mdominguez on 22/09/16.
- */
 public class Usuario implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ID_USUARIO")
     private Integer id;
     private String correo;
+    @Ignore
     private List<Reserva> reservas;
     private Integer puntosSuperPremio;
 
