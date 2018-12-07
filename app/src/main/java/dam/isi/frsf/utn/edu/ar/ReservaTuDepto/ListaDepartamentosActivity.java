@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BuscarDepartamentosTask;
+//import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BuscarDepartamentosTask;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BusquedaFinalizadaListener;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.FormBusqueda;
@@ -39,12 +39,12 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         Boolean esBusqueda = intent.getExtras().getBoolean("esBusqueda");
         if(esBusqueda){
             FormBusqueda fb = (FormBusqueda ) intent.getSerializableExtra("frmBusqueda");
-            new BuscarDepartamentosTask(ListaDepartamentosActivity.this).execute(fb);
+            //new BuscarDepartamentosTask(ListaDepartamentosActivity.this).execute(fb);
             tvEstadoBusqueda.setText("Buscando....");
             tvEstadoBusqueda.setVisibility(View.VISIBLE);
         }else{
             tvEstadoBusqueda.setVisibility(View.GONE);
-            lista=Departamento.getAlojamientosDisponibles();
+            //lista=Departamento.getAlojamientosDisponibles();
         }
         departamentosAdapter = new DepartamentoAdapter(ListaDepartamentosActivity.this,lista);
         listaAlojamientos.setAdapter(departamentosAdapter);

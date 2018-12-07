@@ -3,6 +3,7 @@
     package="dam.isi.frsf.utn.edu.ar.ReservaTuDepto">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +24,11 @@
         <activity android:name=".ListaDepartamentosActivity"
                   android:label="@string/departamentos"/>
         <activity android:name=".AltaReservaActivity"></activity>
+        <activity android:name=".AltaDepartamentoActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAdGYDsmPF49OEiwqNAgWVy9_H0c4mGu-o"/>
     </application>
 
 </manifest>

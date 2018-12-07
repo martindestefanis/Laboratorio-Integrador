@@ -125,6 +125,9 @@ public class Departamento implements Serializable {
     public void setTelefonoPropietario(String telefonoPropietario) {
         this.telefonoPropietario = telefonoPropietario;
     }
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
 
 
     @Override
@@ -149,4 +152,5 @@ public class Departamento implements Serializable {
 
         return Objects.hash(id);
     }
+
 }

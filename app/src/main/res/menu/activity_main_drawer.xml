@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Departamentos" />
         <item
+            android:id="@+id/nav_alta_deptos"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Alta Departamentos" />
+        <item
             android:id="@+id/nav_ofertas"
             android:icon="@drawable/ic_menu_camera"
             android:title="Ofertas" />
