@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,26 +8,40 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingrese una dirección valida" />
+        android:text="Seleccione en el mapa con un marcador la ubicación del departamento " />
+
+    <Button
+        android:id="@+id/btnMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar en mapa" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:text="Ingrese una ciudad" />
 
     <EditText
-        android:id="@+id/edtAddress"
+        android:id="@+id/edtCiudad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPostalAddress" />
 
-    <Button
-        android:id="@+id/btnValidar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Validar" />
-
     <TextView
-        android:id="@+id/txtCoord"
+        android:id="@+id/textView11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Coordenadas" />
+        android:text="Ingrese la dirección" />
+
+    <EditText
+        android:id="@+id/edtDireccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPostalAddress" />
 
     <TextView
         android:id="@+id/textView4"
@@ -35,7 +50,7 @@
         android:text="Ingrese un precio" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/edtPrecio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -48,7 +63,7 @@
         android:text="Ingrese una descripción" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/edtDescripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -61,10 +76,42 @@
         android:text="Capacidad máxima" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/edtCapacidad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="numberSigned" />
+
+    <CheckBox
+        android:id="@+id/chbFumador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fumador" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingrese la cantidad de habitaciones" />
+
+    <EditText
+        android:id="@+id/edtHabitaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingrese la cantidad de camas" />
+
+    <EditText
+        android:id="@+id/edtCamas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
 
 </LinearLayout>

@@ -25,10 +25,13 @@
                   android:label="@string/departamentos"/>
         <activity android:name=".AltaReservaActivity"></activity>
         <activity android:name=".AltaDepartamentoActivity"></activity>
-
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAdGYDsmPF49OEiwqNAgWVy9_H0c4mGu-o"/>
+            android:value="AIzaSyCuYHwH_F4qzlVLJYDJWIR5FZWS_eN5loA"/>
+
     </application>
 
 </manifest>

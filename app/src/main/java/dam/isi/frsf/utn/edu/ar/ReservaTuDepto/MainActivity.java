@@ -58,25 +58,25 @@ public class MainActivity extends AppCompatActivity
         frmBusq= new FormBusqueda();
         txtHuespedes = (EditText) findViewById(R.id.cantHuespedes);
         skPrecioMin = (SeekBar) findViewById(R.id.precioMin);
- //       skPrecioMin.setOnSeekBarChangeListener(listenerSB);
+        skPrecioMin.setOnSeekBarChangeListener(listenerSB);
 
         skPrecioMax= (SeekBar) findViewById(R.id.precioMax);
-//        skPrecioMax.setOnSeekBarChangeListener(listenerSB);
+        skPrecioMax.setOnSeekBarChangeListener(listenerSB);
 
         swFumadores = (Switch) findViewById(R.id.aptoFumadores);
 //        adapterCiudad = new ArrayAdapter<Ciudad>(MainActivity.this,android.R.layout.simple_spinner_item, Arrays.asList(Ciudad.CIUDADES));
 
         cmbCiudad = (Spinner) findViewById(R.id.comboCiudad);
         cmbCiudad.setAdapter(adapterCiudad);
-//        cmbCiudad.setOnItemSelectedListener(comboListener);
+        cmbCiudad.setOnItemSelectedListener(comboListener);
         tvPrecioMinimo = (TextView ) findViewById(R.id.txtPrecioMin);
         tvPrecioMaximo= (TextView ) findViewById(R.id.txtPrecioMax);
 
         btnBuscar = (Button) findViewById(R.id.btnBuscar);
-//        btnBuscar.setOnClickListener(btnBusarListener);
+        btnBuscar.setOnClickListener(btnBusarListener);
     }
 
-/*    private View.OnClickListener btnBusarListener = new View.OnClickListener() {
+    private View.OnClickListener btnBusarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent i = new Intent(MainActivity.this,ListaDepartamentosActivity.class);
@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-*/
 @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
