@@ -37,4 +37,5 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
         return (row);
 
     }
+
 }

@@ -11,4 +11,6 @@ public class UsuarioConReservas {
 
     @Relation(parentColumn = "ID_USUARIO", entityColumn = "usu_ID_USUARIO", entity = Reserva.class)
     public List<Reserva> reservas;
+
+
 }

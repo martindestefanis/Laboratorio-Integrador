@@ -10,4 +10,5 @@ public class AltaReservaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alta_reserva);
     }
+
 }

@@ -60,4 +60,5 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         tvEstadoBusqueda.setText(" Buscando..."+msg);
     }
 
+
 }

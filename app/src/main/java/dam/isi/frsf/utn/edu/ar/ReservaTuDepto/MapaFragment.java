@@ -29,4 +29,5 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
     @Override public void onMapReady(GoogleMap map) {
         miMapa = map;
     }
+
 }

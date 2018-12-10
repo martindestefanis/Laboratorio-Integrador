@@ -49,4 +49,5 @@ public class Usuario implements Serializable {
     public void setPuntosSuperPremio(Integer puntosSuperPremio) {
         this.puntosSuperPremio = puntosSuperPremio;
     }
+
 }
