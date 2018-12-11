@@ -29,7 +29,6 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         lista= new ArrayList<>();
         listaAlojamientos= (ListView ) findViewById(R.id.listaAlojamientos);
         tvEstadoBusqueda = (TextView) findViewById(R.id.estadoBusqueda);
-
     }
 
     @Override
@@ -59,6 +58,4 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
     public void busquedaActualizada(String msg) {
         tvEstadoBusqueda.setText(" Buscando..."+msg);
     }
-
-
 }

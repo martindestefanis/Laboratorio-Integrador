@@ -18,6 +18,7 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
     public BuscarDepartamentosTask(BusquedaFinalizadaListener<Departamento> dListener){
         this.listener = dListener;
     }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -30,8 +31,6 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
     @Override
     protected void onProgressUpdate(Integer... values) {
         listener.busquedaActualizada("departamento "+values[0]);
-
-
     }
 
     @Override

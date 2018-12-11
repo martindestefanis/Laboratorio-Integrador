@@ -2,6 +2,7 @@ package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+@Entity
 public class Departamento implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -31,8 +33,6 @@ public class Departamento implements Serializable {
     private Integer cantidadHabitaciones;
     private Integer cantidadCamas;
     private String telefonoPropietario;
-    @Embedded(prefix = "res_")
-    private Reserva reserva;
 
     public Departamento(){
 
@@ -94,14 +94,6 @@ public class Departamento implements Serializable {
         this.descuento = descuento;
     }
 
-    public Reserva getReserva() {
-        return reserva;
-    }
-
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
-    }
-
     public Integer getCantidadHabitaciones() {
         return cantidadHabitaciones;
     }
@@ -125,8 +117,37 @@ public class Departamento implements Serializable {
     public void setTelefonoPropietario(String telefonoPropietario) {
         this.telefonoPropietario = telefonoPropietario;
     }
+
     public Ciudad getCiudad() {
         return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Boolean getNoFumador() {
+        return noFumador;
+    }
+
+    public void setNoFumador(Boolean noFumador) {
+        this.noFumador = noFumador;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
     }
 
 

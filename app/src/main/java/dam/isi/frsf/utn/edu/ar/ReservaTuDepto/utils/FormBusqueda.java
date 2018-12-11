@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Ciudad;
 
-/**
- * Created by martdominguez on 22/09/2016.
- */
 public class FormBusqueda implements Serializable {
     private Double precioMinimo;
     private Double precioMaximo;

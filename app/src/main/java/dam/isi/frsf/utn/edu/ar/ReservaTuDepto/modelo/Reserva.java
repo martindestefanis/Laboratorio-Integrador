@@ -2,18 +2,24 @@ package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
 public class Reserva implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID_RESERVA")
     private Integer id;
+    @TypeConverters(FechaConverter.class)
     private Date fechaInicio;
+    @TypeConverters(FechaConverter.class)
     private Date fechaFin;
+    @Embedded(prefix = "depto_")
     private Departamento departamento;
     private Double precio;
     @Embedded(prefix = "usu_")
@@ -57,7 +63,7 @@ public class Reserva implements Serializable {
         return departamento;
     }
 
-    public void setAlojamiento(Departamento  alojamiento) {
+    public void setAlojamiento(Departamento alojamiento) {
         this.departamento = alojamiento;
     }
 
@@ -85,5 +91,11 @@ public class Reserva implements Serializable {
         this.confirmada = confirmada;
     }
 
+    public Departamento getDepartamento() {
+        return departamento;
+    }
 
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
 }
