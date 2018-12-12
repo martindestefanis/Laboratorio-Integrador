@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contenido, fragmentInicio)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contenido, fragment,tag)
+                .addToBackStack(null)
                 .commit();
     }
 

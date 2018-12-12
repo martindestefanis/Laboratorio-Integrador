@@ -58,8 +58,7 @@ public class Ciudad implements Serializable {
 
     @Override
     public String toString() {
-        return "Ciudad{" +
-                "nombre='" + nombre + '\'' +
-                '}';
+        return "Ciudad: " + nombre;
     }
+
 }

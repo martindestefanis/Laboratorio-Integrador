@@ -12,9 +12,11 @@
             android:title="Alta Departamento" />
         <item
             android:id="@+id/nav_buscar"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="Buscar Departamento" />
         <item
             android:id="@+id/nav_mapa"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="Ver Departamentos en Mapa" />
     </group>
 
