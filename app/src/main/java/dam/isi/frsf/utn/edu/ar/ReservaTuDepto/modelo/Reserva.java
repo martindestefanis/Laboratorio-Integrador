@@ -3,6 +3,7 @@ package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
@@ -28,6 +29,7 @@ public class Reserva implements Serializable {
 
     public Reserva(){}
 
+    @Ignore
     public Reserva(Integer id, Date fechaInicio, Date fechaFin, Departamento departamento) {
         this.id = id;
         this.fechaInicio = fechaInicio;

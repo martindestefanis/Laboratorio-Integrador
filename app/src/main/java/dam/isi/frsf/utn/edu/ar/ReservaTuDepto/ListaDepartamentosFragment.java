@@ -1,6 +1,5 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-//import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BuscarDepartamentosTask;
-import java.util.ArrayList;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BuscarDepartamentosTask;
 import java.util.List;
 
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
-import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BuscarDepartamentosTask;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.DepartamentoDAO;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BusquedaFinalizadaListener;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.FormBusqueda;
 
@@ -23,20 +22,21 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
     private TextView tvEstadoBusqueda;
     private ListView listaAlojamientos;
     private DepartamentoAdapter departamentosAdapter;
-    private List<Departamento> lista;
+    private List<Departamento> departamentos;
+    private DepartamentoDAO departamentoDAO;
 
     public ListaDepartamentosFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_lista_departamentos, container, false);
 
-        lista = new ArrayList<>();
         listaAlojamientos = (ListView) v.findViewById(R.id.listaAlojamientos);
         tvEstadoBusqueda = (TextView) v.findViewById(R.id.estadoBusqueda);
+
+        departamentoDAO = MyDatabase.getInstance(this.getActivity()).getDepartamentoDAO();
 
         return v;
     }
@@ -44,36 +44,35 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
     @Override
     public void onStart() {
         super.onStart();
-        /*Intent intent = getIntent();
-        Boolean esBusqueda = intent.getExtras().getBoolean("esBusqueda");
-        if(esBusqueda){
-            FormBusqueda fb = (FormBusqueda ) intent.getSerializableExtra("frmBusqueda");
-            //new BuscarDepartamentosTask(ListaDepartamentosActivity.this).execute(fb);
-            tvEstadoBusqueda.setText("Buscando....");
-            tvEstadoBusqueda.setVisibility(View.VISIBLE);
-        }else{
-            tvEstadoBusqueda.setVisibility(View.GONE);
-            //lista=Departamento.getAlojamientosDisponibles();
-        }
-        departamentosAdapter = new DepartamentoAdapter(ListaDepartamentosActivity.this,lista);
-        listaAlojamientos.setAdapter(departamentosAdapter);*/
-
         Boolean esBusqueda = false;
         Bundle args = getArguments();
         if(args != null) {
             esBusqueda = args.getBoolean("esBusqueda",false);
         }
-        /*if(esBusqueda){
-            FormBusqueda fb = (FormBusqueda ) intent.getSerializableExtra("frmBusqueda");
-            new BuscarDepartamentosTask(ListaDepartamentosActivity.this).execute(fb);
+        if(esBusqueda){
+            FormBusqueda fb = (FormBusqueda) args.getSerializable("frmBusqueda");
+            new BuscarDepartamentosTask(ListaDepartamentosFragment.this).execute(fb);
             tvEstadoBusqueda.setText("Buscando....");
             tvEstadoBusqueda.setVisibility(View.VISIBLE);
-        }else{
-            tvEstadoBusqueda.setVisibility(View.GONE);
-            lista=Departamento.getAlojamientosDisponibles();
         }
-        departamentosAdapter = new DepartamentoAdapter(ListaDepartamentosActivity.this,lista);
-        listaAlojamientos.setAdapter(departamentosAdapter);*/
+        else{
+            tvEstadoBusqueda.setVisibility(View.GONE);
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    departamentos = departamentoDAO.getAll();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            departamentosAdapter = new DepartamentoAdapter(getActivity().getApplicationContext(), departamentos);
+                            listaAlojamientos.setAdapter(departamentosAdapter);
+                        }
+                    });
+                }
+            };
+            Thread t = new Thread(r);
+            t.start();
+        }
     }
 
     @Override

@@ -11,31 +11,38 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.DepartamentoDAO;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 
 public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
-    private LayoutInflater inflater;
-    private Context contexto;
+    private Context ctx;
+    private List<Departamento> datos;
+    private DepartamentoDAO departamentoDAO;
 
     public DepartamentoAdapter(Context contexto, List<Departamento> items) {
         super(contexto, R.layout.fila, items);
-        inflater = LayoutInflater.from(contexto);
+        this.ctx = contexto;
+        this.datos = items;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        departamentoDAO = MyDatabase.getInstance(this.ctx).getDepartamentoDAO();
+        LayoutInflater inflater = LayoutInflater.from(this.ctx);
         DecimalFormat df = new DecimalFormat("#.##");
         View row = convertView;
-        if (row == null) row = inflater.inflate(R.layout.fila, parent, false);
+        if (row == null){
+            row = inflater.inflate(R.layout.fila, parent, false);
+        }
+        final Departamento departamento = (Departamento) super.getItem(position);
         TextView txtCiudad = (TextView) row.findViewById(R.id.ciudad);
-        txtCiudad.setText(this.getItem(position).getCiudad().getNombre());
+        txtCiudad.setText(departamento.getCiudad().getNombre());
         TextView txtDescripcion = (TextView) row.findViewById(R.id.descripcion);
-        txtDescripcion.setText("Unico!! " + this.getItem(position).getDescripcion());
+        txtDescripcion.setText(departamento.getDescripcion());
         TextView txtPrecio = (TextView) row.findViewById(R.id.precio);
-        txtPrecio.setText("$" + (df.format(this.getItem(position).getPrecio())));
+        txtPrecio.setText("$" + (df.format(departamento.getPrecio())));
         TextView txtCapacidad = (TextView) row.findViewById(R.id.capacidadMax);
-        txtCapacidad.setText(this.getItem(position).getCapacidadMaxima()+".");
+        txtCapacidad.setText(departamento.getCapacidadMaxima()+".");
         return (row);
-
     }
-
 }

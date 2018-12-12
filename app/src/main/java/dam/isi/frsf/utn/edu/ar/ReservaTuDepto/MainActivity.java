@@ -1,6 +1,5 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -8,7 +7,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,12 +21,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -84,9 +80,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         switch (id){
             case R.id.nav_deptos:
-                /*Intent i1 = new Intent(MainActivity.this,ListaDepartamentosActivity.class);
-                i1.putExtra("esBusqueda",false );
-                startActivity(i1);*/
                 tag = "listaDepartamentos";
                 fragment =  getSupportFragmentManager().findFragmentByTag(tag);
                 if(fragment==null) {
@@ -95,27 +88,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction = true;
                 break;
             case R.id.nav_alta_deptos:
-                /*Intent i2 = new Intent(MainActivity.this,AltaDepartamentoActivity.class);
-                startActivity(i2);*/
-
                 tag = "altaDepartamentoFragment";
                 fragment =  getSupportFragmentManager().findFragmentByTag(tag);
                 if(fragment==null) {
                     fragment = new AltaDepartamentoFragment();
                     ((AltaDepartamentoFragment) fragment).setListener(MainActivity.this);
                 }
-
                 fragmentTransaction = true;
-                break;
-            case R.id.nav_ofertas:
                 break;
             case R.id.nav_perfil:
                 break;
             case R.id.nav_reservas:
                 break;
-            case R.id.nav_destinos:
-                break;
-
         }
 
         if(fragmentTransaction) {
@@ -126,8 +110,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .commit();
 
             item.setChecked(true);
-
-            //getSupportActionBar().setTitle(item.getTitle());
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -137,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void coordenadasSeleccionadas(LatLng c) {
-        String tag = "nuevoReclamoFragment";
+        String tag = "altaDepartamentoFragment";
         Fragment fragment =  getSupportFragmentManager().findFragmentByTag(tag);
         if(fragment==null) {
             fragment = new AltaDepartamentoFragment();
@@ -154,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void obtenerCoordenadas() {
-        String tag="mapaReclamos";
+        String tag="mapaDepartamentos";
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if(fragment==null) {
             fragment = new MapaFragment();

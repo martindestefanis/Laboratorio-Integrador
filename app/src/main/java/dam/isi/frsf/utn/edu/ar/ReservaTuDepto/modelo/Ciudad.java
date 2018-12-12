@@ -2,6 +2,7 @@ package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -11,13 +12,16 @@ import java.util.Objects;
 public class Ciudad implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "ID_CUIDAD")
+    @ColumnInfo(name = "ID_CIUDAD")
     private Integer id;
     private String nombre;
 
-    public Ciudad(){}
+    public Ciudad(){
 
-    public Ciudad(Integer id,String nombre,Double tasa){
+    }
+
+    @Ignore
+    public Ciudad(Integer id, String nombre){
         this.id = id;
         this.nombre = nombre;
     }
@@ -39,11 +43,6 @@ public class Ciudad implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return nombre;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -55,5 +54,12 @@ public class Ciudad implements Serializable {
     public int hashCode() {
 
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Ciudad{" +
+                "nombre='" + nombre + '\'' +
+                '}';
     }
 }

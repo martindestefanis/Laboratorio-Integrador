@@ -5,19 +5,17 @@
         <item
             android:id="@+id/nav_deptos"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Departamentos" />
+            android:title="Lista de Departamentos" />
         <item
             android:id="@+id/nav_alta_deptos"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Alta Departamentos" />
+            android:title="Alta Departamento" />
         <item
-            android:id="@+id/nav_ofertas"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Ofertas" />
+            android:id="@+id/nav_buscar"
+            android:title="Buscar Departamento" />
         <item
-            android:id="@+id/nav_destinos"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Destinos" />
+            android:id="@+id/nav_mapa"
+            android:title="Ver Departamentos en Mapa" />
     </group>
 
     <item android:title="Usuario">

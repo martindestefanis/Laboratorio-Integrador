@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -12,12 +13,15 @@ public interface CiudadDAO {
     @Query("SELECT * FROM Ciudad")
     List<Ciudad> getAll();
 
-    @Insert
-    long insert(Ciudad r);
+    @Query("SELECT * FROM Ciudad WHERE ID_CIUDAD = :CiudadID")
+    Ciudad buscarPorID(long CiudadID);
 
     @Insert
-    void update(Ciudad r);
+    long insert(Ciudad ciudad);
+
+    @Update
+    void update(Ciudad ciudad);
 
     @Delete
-    void delete(Ciudad r);
+    void delete(Ciudad ciudad);
 }

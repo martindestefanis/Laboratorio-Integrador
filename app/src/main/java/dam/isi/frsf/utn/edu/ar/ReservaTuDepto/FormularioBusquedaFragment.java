@@ -1,6 +1,5 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,9 +15,11 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.Arrays;
+import java.util.List;
 
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Ciudad;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.CiudadDAO;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.FormBusqueda;
 
 public class FormularioBusquedaFragment extends Fragment {
@@ -33,6 +34,8 @@ public class FormularioBusquedaFragment extends Fragment {
     private EditText txtHuespedes;
     private Switch swFumadores;
     private FormBusqueda frmBusq;
+    private CiudadDAO ciudadDAO;
+    private List<Ciudad> ciudades;
 
     public FormularioBusquedaFragment() {
         // Required empty public constructor
@@ -43,22 +46,38 @@ public class FormularioBusquedaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_formulario_busqueda, container, false);
 
-        frmBusq= new FormBusqueda();
+        ciudadDAO = MyDatabase.getInstance(getContext()).getCiudadDAO();
+
+        frmBusq = new FormBusqueda();
         txtHuespedes = (EditText) v.findViewById(R.id.cantHuespedes);
         skPrecioMin = (SeekBar) v.findViewById(R.id.precioMin);
         skPrecioMin.setOnSeekBarChangeListener(listenerSB);
 
-        skPrecioMax= (SeekBar) v.findViewById(R.id.precioMax);
+        skPrecioMax = (SeekBar) v.findViewById(R.id.precioMax);
         skPrecioMax.setOnSeekBarChangeListener(listenerSB);
 
         swFumadores = (Switch) v.findViewById(R.id.aptoFumadores);
-        //adapterCiudad = new ArrayAdapter<Ciudad>(MainActivity.this,android.R.layout.simple_spinner_item, Arrays.asList(Ciudad.CIUDADES));
 
         cmbCiudad = (Spinner) v.findViewById(R.id.comboCiudad);
-        cmbCiudad.setAdapter(adapterCiudad);
-        cmbCiudad.setOnItemSelectedListener(comboListener);
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                ciudades = ciudadDAO.getAll();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapterCiudad = new ArrayAdapter<Ciudad>(getContext(), android.R.layout.simple_spinner_item, ciudades);
+                        cmbCiudad.setAdapter(adapterCiudad);
+                        cmbCiudad.setOnItemSelectedListener(comboListener);
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+
         tvPrecioMinimo = (TextView) v.findViewById(R.id.txtPrecioMin);
-        tvPrecioMaximo= (TextView ) v.findViewById(R.id.txtPrecioMax);
+        tvPrecioMaximo = (TextView ) v.findViewById(R.id.txtPrecioMax);
 
         btnBuscar = (Button) v.findViewById(R.id.btnBuscar);
         btnBuscar.setOnClickListener(btnBusarListener);
@@ -69,14 +88,11 @@ public class FormularioBusquedaFragment extends Fragment {
     private View.OnClickListener btnBusarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            /*Intent i = new Intent(MainActivity.this,ListaDepartamentosActivity.class);
             frmBusq.setPermiteFumar(swFumadores.isSelected());
-            i.putExtra("esBusqueda",true);
-            i.putExtra("frmBusqueda",frmBusq);
-            startActivity(i);*/
             Fragment f = new ListaDepartamentosFragment();
             Bundle args = new Bundle();
             args.putBoolean("esBusqueda", true);
+            args.putSerializable("frmBusqueda", frmBusq);
             f.setArguments(args);
             getActivity().getSupportFragmentManager()
                     .beginTransaction()

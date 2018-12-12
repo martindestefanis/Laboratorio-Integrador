@@ -37,7 +37,7 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         Intent intent = getIntent();
         Boolean esBusqueda = intent.getExtras().getBoolean("esBusqueda");
         if(esBusqueda){
-            FormBusqueda fb = (FormBusqueda ) intent.getSerializableExtra("frmBusqueda");
+            FormBusqueda fb = (FormBusqueda) intent.getSerializableExtra("frmBusqueda");
             //new BuscarDepartamentosTask(ListaDepartamentosActivity.this).execute(fb);
             tvEstadoBusqueda.setText("Buscando....");
             tvEstadoBusqueda.setVisibility(View.VISIBLE);

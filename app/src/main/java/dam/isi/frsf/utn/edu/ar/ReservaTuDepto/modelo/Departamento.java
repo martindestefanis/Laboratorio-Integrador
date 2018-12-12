@@ -5,13 +5,9 @@ import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 @Entity
 public class Departamento implements Serializable {
@@ -26,10 +22,8 @@ public class Departamento implements Serializable {
     private String direccion;
     private Double precio;
     private String descripcion;
-    private Double descuento;
     private Integer capacidadMaxima;
     private Boolean noFumador;
-    private String correoElectronico;
     private Integer cantidadHabitaciones;
     private Integer cantidadCamas;
     private String telefonoPropietario;
@@ -86,14 +80,6 @@ public class Departamento implements Serializable {
         this.capacidadMaxima = capacidadMaxima;
     }
 
-    public Double getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(Double descuento) {
-        this.descuento = descuento;
-    }
-
     public Integer getCantidadHabitaciones() {
         return cantidadHabitaciones;
     }
@@ -141,15 +127,6 @@ public class Departamento implements Serializable {
     public void setNoFumador(Boolean noFumador) {
         this.noFumador = noFumador;
     }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
 
     @Override
     public String toString() {

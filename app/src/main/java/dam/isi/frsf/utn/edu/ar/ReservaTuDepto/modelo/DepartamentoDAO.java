@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -13,11 +14,11 @@ public interface DepartamentoDAO {
     List<Departamento> getAll();
 
     @Insert
-    long insert(Departamento r);
+    long insert(Departamento depto);
 
-    @Insert
-    void update(Departamento r);
+    @Update
+    void update(Departamento depto);
 
     @Delete
-    void delete(Departamento r);
+    void delete(Departamento depto);
 }

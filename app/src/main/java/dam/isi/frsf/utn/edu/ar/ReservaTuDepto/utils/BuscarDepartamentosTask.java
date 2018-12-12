@@ -8,9 +8,6 @@ import java.util.List;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Ciudad;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
 
-/**
- * Created by martdominguez on 22/09/2016.
- */
 public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List<Departamento>> {
 
     private BusquedaFinalizadaListener<Departamento> listener;

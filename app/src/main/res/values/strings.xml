@@ -1,13 +1,22 @@
 <resources>
     <string name="app_name">ReservaTuDepto</string>
-    <string name="title_activity_main2">ReservaTuDepto.com</string>
-
     <string name="navigation_drawer_open">Mostrar Opciones</string>
     <string name="navigation_drawer_close">Ocultar Opciones</string>
     <string name="departamentos">Departamentos</string>
     <string name="action_settings">Configuracion</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="seleccioneUbicacion">Seleccione en el mapa con un marcador la ubicación del departamento</string>
+    <string name="seleccioneUbicacion">Seleccione la ubicación del departamento</string>
+    <string name="reserva_tu_depto">Reservá tu departamento</string>
+    <string name="reserva_tu_depto_com">reservatudepto.com</string>
+    <string name="seleccionar_en_mapa">Seleccionar en mapa</string>
+    <string name="ingrese_una_ciudad">Ingrese una ciudad</string>
+    <string name="ingrese_la_direccion">Ingrese la dirección</string>
+    <string name="ingrese_un_precio">Ingrese un precio</string>
+    <string name="ingrese_una_descripcion">Ingrese una descripción</string>
+    <string name="capacidad_maxima">Capacidad máxima</string>
+    <string name="ingrese_la_cantidad_de_habitaciones">Ingrese la cantidad de habitaciones</string>
+    <string name="ingrese_la_cantidad_de_camas">Ingrese la cantidad de camas</string>
+    <string name="aceptar">ACEPTAR</string>
+    <string name="cancelar">CANCELAR</string>
+    <string name="ingrese_un_telefono">Ingrese un teléfono</string>
+    <string name="permitido_fumar">Permitido fumar</string>
 </resources>
