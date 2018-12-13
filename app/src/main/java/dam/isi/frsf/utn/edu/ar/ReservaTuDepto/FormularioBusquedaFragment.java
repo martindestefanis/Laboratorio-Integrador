@@ -89,6 +89,13 @@ public class FormularioBusquedaFragment extends Fragment {
         @Override
         public void onClick(View view) {
             frmBusq.setPermiteFumar(swFumadores.isSelected());
+            Integer huespedes = null;
+            try {
+                huespedes = Integer.parseInt(txtHuespedes.getText().toString());
+            } catch (NumberFormatException e) {
+                huespedes = null;
+            }
+            frmBusq.setHuespedes(huespedes);
             Fragment f = new ListaDepartamentosFragment();
             Bundle args = new Bundle();
             args.putBoolean("esBusqueda", true);
@@ -97,6 +104,7 @@ public class FormularioBusquedaFragment extends Fragment {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.contenido, f)
+                    .addToBackStack(null)
                     .commit();
         }
     };
@@ -120,7 +128,7 @@ public class FormularioBusquedaFragment extends Fragment {
                 frmBusq.setPrecioMinimo(Double.valueOf(progress));
             }
             if(seekBar.getId()==R.id.precioMax) {
-                tvPrecioMaximo.setText("Precio Maximo"+progress);
+                tvPrecioMaximo.setText("Precio Maximo "+progress);
                 frmBusq.setPrecioMaximo(Double.valueOf(progress));
             }
         }

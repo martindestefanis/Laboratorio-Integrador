@@ -1,6 +1,7 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,11 @@ import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
 public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List<Departamento>> {
 
     private BusquedaFinalizadaListener<Departamento> listener;
+    private List<Departamento> todos;
 
-    public BuscarDepartamentosTask(BusquedaFinalizadaListener<Departamento> dListener){
+    public BuscarDepartamentosTask(BusquedaFinalizadaListener<Departamento> dListener, List<Departamento> departamentos) {
         this.listener = dListener;
+        this.todos = departamentos;
     }
 
     @Override
@@ -23,21 +26,37 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
 
     @Override
     protected void onPostExecute(List<Departamento> departamentos) {
+        listener.busquedaFinalizada(departamentos);
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        listener.busquedaActualizada("departamento "+values[0]);
+        listener.busquedaActualizada("departamento " + values[0]);
     }
 
     @Override
     protected List<Departamento> doInBackground(FormBusqueda... busqueda) {
-        //List<Departamento> todos = Departamento.getAlojamientosDisponibles();
+        Log.i("size departamentos", todos.size() + "");
         List<Departamento> resultado = new ArrayList<Departamento>();
-        int contador = 0;
-        Ciudad ciudadBuscada = busqueda[0].getCiudad();
-        // TODO implementar: buscar todos los departamentos del sistema e ir chequeando las condiciones 1 a 1.
-        // si cumplen las condiciones agregarlo a los resultados.
+        String ciudadBuscada = busqueda[0].getCiudad().toString();
+        FormBusqueda busquedaActual = busqueda[0];
+
+        for( Departamento d: todos ){
+            Log.i("resul", ciudadBuscada.equals(d.getCiudad().toString()) + "");
+            if(
+                (busquedaActual.getPermiteFumar() == ! d.getNoFumador()) &&
+                        (ciudadBuscada.equals(d.getCiudad().toString())) &&
+                        (busquedaActual.getHuespedes() == null || busquedaActual.getHuespedes() >= d.getCapacidadMaxima())&&
+                        (busquedaActual.getPrecioMaximo() == null   ||  busquedaActual.getPrecioMaximo() >= d.getPrecio()) &&
+                        (busquedaActual.getPrecioMinimo() == null   ||   busquedaActual.getPrecioMinimo() <= d.getPrecio())
+                )
+            {
+                resultado.add(d);
+
+            }
+        }
+
         return resultado;
     }
 }
+

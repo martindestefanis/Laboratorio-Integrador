@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BuscarDepartamentosTask;
 import java.util.List;
@@ -50,21 +51,45 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
             esBusqueda = args.getBoolean("esBusqueda",false);
         }
         if(esBusqueda){
-            FormBusqueda fb = (FormBusqueda) args.getSerializable("frmBusqueda");
-            new BuscarDepartamentosTask(ListaDepartamentosFragment.this).execute(fb);
+            final FormBusqueda fb = (FormBusqueda) args.getSerializable("frmBusqueda");
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    new BuscarDepartamentosTask(ListaDepartamentosFragment.this, departamentoDAO.getAll()).execute(fb);
+                }
+            };
+            Thread t = new Thread(r);
+            t.start();
             tvEstadoBusqueda.setText("Buscando....");
             tvEstadoBusqueda.setVisibility(View.VISIBLE);
         }
         else{
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    llenarLista(departamentoDAO.getAll());
+                }
+            };
+            Thread t = new Thread(r);
+            t.start();
+        }
+        Toast toast = Toast.makeText(getContext(), "Para reservar el departamento, mantenga pulsado sobre el mismo.", Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    private void llenarLista(final List<Departamento> listaDepartamentos){
+        if(listaDepartamentos.isEmpty()) {
+            tvEstadoBusqueda.setText("No se encontraron resultados");
+        } else {
             tvEstadoBusqueda.setVisibility(View.GONE);
             Runnable r = new Runnable() {
                 @Override
                 public void run() {
-                    departamentos = departamentoDAO.getAll();
+                    //departamentos = departamentoDAO.getAll();
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            departamentosAdapter = new DepartamentoAdapter(getActivity().getApplicationContext(), departamentos);
+                            departamentosAdapter = new DepartamentoAdapter(getActivity().getApplicationContext(), listaDepartamentos);
                             listaAlojamientos.setAdapter(departamentosAdapter);
                         }
                     });
@@ -75,9 +100,10 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
         }
     }
 
+
     @Override
     public void busquedaFinalizada(List<Departamento> listaDepartamento) {
-        //TODO implementar
+        llenarLista(listaDepartamento);
     }
 
     @Override
