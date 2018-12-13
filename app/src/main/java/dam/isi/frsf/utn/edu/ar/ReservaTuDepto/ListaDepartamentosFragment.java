@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BusquedaFinalizadaListener;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.FormBusqueda;
 
-public class ListaDepartamentosFragment extends Fragment implements BusquedaFinalizadaListener<Departamento> {
+public class ListaDepartamentosFragment extends Fragment implements BusquedaFinalizadaListener<Departamento>, AdapterView.OnItemLongClickListener {
 
     private TextView tvEstadoBusqueda;
     private ListView listaAlojamientos;
@@ -36,6 +37,7 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
 
         listaAlojamientos = (ListView) v.findViewById(R.id.listaAlojamientos);
         tvEstadoBusqueda = (TextView) v.findViewById(R.id.estadoBusqueda);
+        listaAlojamientos.setOnItemLongClickListener(this);
 
         departamentoDAO = MyDatabase.getInstance(this.getActivity()).getDepartamentoDAO();
 
@@ -85,7 +87,6 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
             Runnable r = new Runnable() {
                 @Override
                 public void run() {
-                    //departamentos = departamentoDAO.getAll();
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -109,6 +110,22 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
     @Override
     public void busquedaActualizada(String msg) {
         tvEstadoBusqueda.setText(" Buscando..."+msg);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        Departamento selected = (Departamento) departamentosAdapter.getItem(position);
+        assert(selected != null);
+        Fragment f = new AltaReservaFragment();
+        Bundle argumentos = new Bundle();
+        argumentos.putSerializable("departamentoSeleccionado",selected);
+        f.setArguments(argumentos);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.contenido, f)
+                .addToBackStack(null)
+                .commit();
+        return false;
     }
 
 }

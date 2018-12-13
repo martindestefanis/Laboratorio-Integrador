@@ -19,4 +19,5 @@
     <string name="cancelar">CANCELAR</string>
     <string name="ingrese_un_telefono">Ingrese un teléfono</string>
     <string name="permitido_fumar">Permitido fumar</string>
+    <string name="tagformBusqueda">formBusqueda</string>
 </resources>

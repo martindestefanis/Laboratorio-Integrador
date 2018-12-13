@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contenido, fragmentInicio)
-                .addToBackStack(null)
+                .addToBackStack("@string/tagformBusqueda")
                 .commit();
     }
 
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.contenido, fragment,tag)
-                    .addToBackStack(null)
+                    .addToBackStack("@string/tagformBusqueda")
                     .commit();
 
             item.setChecked(true);
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contenido, fragment,tag)
-                .addToBackStack(null)
+                .addToBackStack("@string/tagformBusqueda")
                 .commit();
     }
 
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contenido, fragment,tag)
-                .addToBackStack(null)
+                .addToBackStack("@string/tagformBusqueda")
                 .commit();
     }
 }

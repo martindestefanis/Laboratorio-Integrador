@@ -13,7 +13,7 @@
         <item
             android:id="@+id/nav_buscar"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Buscar Departamento" />
+            android:title="Buscar Departamentos" />
         <item
             android:id="@+id/nav_mapa"
             android:icon="@drawable/ic_menu_slideshow"

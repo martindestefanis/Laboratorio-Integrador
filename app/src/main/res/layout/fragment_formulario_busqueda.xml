@@ -14,6 +14,7 @@
         android:textStyle="bold|italic"
         android:typeface="serif"
         android:background="#d3e8f2"
+        android:tag="@string/tagformBusqueda"
         android:textColor="#691515" />
 
     <TextView
