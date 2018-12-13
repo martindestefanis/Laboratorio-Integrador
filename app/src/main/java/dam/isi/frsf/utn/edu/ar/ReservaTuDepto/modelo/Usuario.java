@@ -15,9 +15,9 @@ public class Usuario implements Serializable {
     @ColumnInfo(name = "ID_USUARIO")
     private Integer id;
     private String correo;
+    private String nombre;
     @Ignore
     private List<Reserva> reservas;
-    private Integer puntosSuperPremio;
 
     public Usuario(){
 
@@ -47,12 +47,11 @@ public class Usuario implements Serializable {
         this.reservas = reservas;
     }
 
-    public Integer getPuntosSuperPremio() {
-        return puntosSuperPremio;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setPuntosSuperPremio(Integer puntosSuperPremio) {
-        this.puntosSuperPremio = puntosSuperPremio;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-
 }

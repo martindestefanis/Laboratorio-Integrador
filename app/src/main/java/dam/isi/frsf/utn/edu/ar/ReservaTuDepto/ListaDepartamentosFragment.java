@@ -24,7 +24,6 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
     private TextView tvEstadoBusqueda;
     private ListView listaAlojamientos;
     private DepartamentoAdapter departamentosAdapter;
-    private List<Departamento> departamentos;
     private DepartamentoDAO departamentoDAO;
 
     public ListaDepartamentosFragment() {
@@ -75,8 +74,7 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
             Thread t = new Thread(r);
             t.start();
         }
-        Toast toast = Toast.makeText(getContext(), "Para reservar el departamento, mantenga pulsado sobre el mismo.", Toast.LENGTH_LONG);
-        toast.show();
+        Toast.makeText(getContext(), "Para reservar el departamento, mantenga pulsado sobre el mismo.", Toast.LENGTH_LONG).show();
     }
 
     private void llenarLista(final List<Departamento> listaDepartamentos){

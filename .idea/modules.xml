@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Laboratorio-Integrador.iml" filepath="$PROJECT_DIR$/Laboratorio-Integrador.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TPIntegrador.iml" filepath="$PROJECT_DIR$/TPIntegrador.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

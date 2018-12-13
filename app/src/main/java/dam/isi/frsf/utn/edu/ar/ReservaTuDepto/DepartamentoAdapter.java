@@ -20,7 +20,7 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
     private DepartamentoDAO departamentoDAO;
 
     public DepartamentoAdapter(Context contexto, List<Departamento> items) {
-        super(contexto, R.layout.fila, items);
+        super(contexto, R.layout.fila_depto, items);
         this.ctx = contexto;
         this.datos = items;
     }
@@ -32,7 +32,7 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
         DecimalFormat df = new DecimalFormat("#.##");
         View row = convertView;
         if (row == null){
-            row = inflater.inflate(R.layout.fila, parent, false);
+            row = inflater.inflate(R.layout.fila_depto, parent, false);
         }
         final Departamento departamento = (Departamento) super.getItem(position);
         TextView txtCiudad = (TextView) row.findViewById(R.id.ciudad);

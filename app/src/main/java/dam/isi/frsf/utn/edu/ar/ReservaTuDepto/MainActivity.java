@@ -1,5 +1,6 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -98,8 +99,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction = true;
                 break;
             case R.id.nav_perfil:
+                Intent intent = new Intent(MainActivity.this, ConfiguracionActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_reservas:
+                tag = "listaReservasFragment";
+                fragment =  getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null) {
+                    fragment = new ListaReservasFragment();
+                }
+                fragmentTransaction = true;
                 break;
         }
 

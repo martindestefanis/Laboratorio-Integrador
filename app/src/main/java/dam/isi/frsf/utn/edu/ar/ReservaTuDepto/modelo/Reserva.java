@@ -65,10 +65,6 @@ public class Reserva implements Serializable {
         return departamento;
     }
 
-    public void setAlojamiento(Departamento alojamiento) {
-        this.departamento = alojamiento;
-    }
-
     public Double getPrecio() {
         return precio;
     }
