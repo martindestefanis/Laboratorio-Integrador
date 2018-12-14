@@ -119,6 +119,8 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                             unaReserva.setDepartamento(selected);
                             unaReserva.setPrecio(selected.getPrecio());
                             unaReserva.setEstado(Reserva.Estado.REALIZADO);
+                            Log.d("fechaReservaI",unaReserva.getFechaInicio().toString());
+                            Log.d("fechaReservaF",unaReserva.getFechaFin().toString());
                             reservaDAO.insert(unaReserva);
                             List<Reserva> lista = reservaDAO.getAll();
                             for(Reserva re :lista) {
@@ -129,7 +131,6 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                                     intent.setAction(EstadoPedidoReceiver.ESTADO_PENDIENTE);
                                     intent.putExtra("idReserva", re.getId());
                                     getActivity().getApplicationContext().sendBroadcast(intent);
-                                    getActivity().onBackPressed();
                                 }
                             }
                         }
@@ -150,19 +151,18 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         if(esFechaInicio){
             Date fecha = new Date();
-            fecha.setYear(year);
+            fecha.setYear(year-1900);
             fecha.setMonth(monthOfYear);
             fecha.setDate(dayOfMonth);
             unaReserva.setFechaInicio(fecha);
-            Log.d("fecha", "inicio: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
+            Log.d("fecha", "inicio: "+fecha.getDate()+"/"+fecha.getMonth()+"/"+fecha.getYear());
         }
         else{
             Date fecha = new Date();
-            fecha.setYear(year);
+            fecha.setYear(year-1900);
             fecha.setMonth(monthOfYear);
             fecha.setDate(dayOfMonth);
             unaReserva.setFechaFin(fecha);
-            //Log.d("fecha", "fin: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
             Log.d("fecha", "fin: "+fecha.getDate()+"/"+fecha.getMonth()+"/"+fecha.getYear());
         }
     }
@@ -170,7 +170,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
     public boolean validarPreferencias(String email, String nombre){
         boolean hayPrefs = false;
 
-        if(!email.equals("") || !nombre.equals("")){
+        if(!email.equals(" ") || !nombre.equals(" ")){
             hayPrefs = true;
         }
 

@@ -2,14 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
-        android:defaultValue="Default value"
+        android:defaultValue=" "
         android:key="correo_preference"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="Ingrese su correo electrónico"
         android:title="Correo electrónico" />
     <EditTextPreference
-        android:defaultValue="Default value"
+        android:defaultValue=" "
         android:key="nombre_preference"
         android:selectAllOnFocus="true"
         android:singleLine="true"

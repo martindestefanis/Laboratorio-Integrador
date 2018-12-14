@@ -110,6 +110,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 fragmentTransaction = true;
                 break;
+            case R.id.nav_buscar:
+                tag = "fragmentFormBusqueda";
+                fragment =  getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null) {
+                    fragment = new FormularioBusquedaFragment();
+                }
+                fragmentTransaction = true;
+                break;
         }
 
         if(fragmentTransaction) {

@@ -1,6 +1,7 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
         }
         final Departamento departamento = (Departamento) super.getItem(position);
         TextView txtCiudad = (TextView) row.findViewById(R.id.ciudad);
-        txtCiudad.setText(departamento.getCiudad().getNombre());
+        txtCiudad.setText(departamento.getCiudad().toString());
         TextView txtDescripcion = (TextView) row.findViewById(R.id.descripcion);
         txtDescripcion.setText(departamento.getDescripcion());
         TextView txtPrecio = (TextView) row.findViewById(R.id.precio);
