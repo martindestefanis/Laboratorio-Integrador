@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +27,7 @@ import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Reserva;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.ReservaDAO;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Usuario;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioConReservas;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioDAO;
 
 public class AltaReservaFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
@@ -75,6 +78,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
             }
         });
 
+
         btnFechaInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +90,9 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                         now.get(Calendar.MONTH), // Initial month selection
                         now.get(Calendar.DAY_OF_MONTH) // Inital day selection
                 );
+                //TODO:ACA SE LLAMA
+                List<Calendar[]> disabledDays1 = calendarDeFechasADeshabilitar();
+                dpd.setDisabledDays(disabledDays1.get(0));
 
                 dpd.setTitle("Ingrese la fecha de inicio de la reserva");
                 dpd.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "DatePickerDialog");
@@ -177,11 +184,6 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
         return hayPrefs;
     }
 
-    /*public Calendar[] calendarioValido(){
-        Calendar[] calendario = new Calendar[];
-
-        return calendario;
-    }*/
 
     private static List<Date> getDates(Date date1, Date date2) {
         ArrayList<Date> dates = new ArrayList<Date>();
@@ -199,4 +201,70 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
         }
         return dates;
     }
+    private Calendar dateToCalendar(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
+
+
+    private List<Calendar[]> calendarDeFechasADeshabilitar(){
+        Calendar calendar1 = Calendar.getInstance();
+        List<Reserva> listaReservas = new ArrayList<>();
+        List<UsuarioConReservas> listaUsuarioConReservas = new List<UsuarioConReservas>;
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                List<UsuarioConReservas> listaUsuarioConReservas = usuarioDAO.buscarUsuarioConReservas();
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+
+        for(UsuarioConReservas listUsrConRes : listaUsuarioConReservas){
+            listaReservas = listUsrConRes.reservas;
+        }
+        List<Date> listaDates = new ArrayList<Date>();
+        List<Calendar[]> disabledDays1 = new ArrayList<Calendar[]>();
+
+        for(Reserva reserva:listaReservas){
+            if(reserva.getDepartamento().getId().equals(selected.getId())){
+                listaDates = getDates(reserva.getFechaInicio(),reserva.getFechaFin());
+                for(Date date:listaDates){
+                    calendar1 = dateToCalendar(date);
+                    List<Calendar> listaCalendar = new ArrayList<>();
+                    listaCalendar.add(calendar1);
+                    disabledDays1.add(listaCalendar.toArray(new Calendar[listaCalendar.size()]));
+                   // Calendar[] disabledDays1 = listaCalendar.toArray(new Calendar[listaCalendar.size()]);
+                }
+            }
+        }
+
+        /* //TODO:PROBANDO LO DE LAS FECHAS DISABLE
+        Calendar calendar1 = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String[] a = {"20/12/2018","21/12/2018","22/12/2018"};
+        java.util.Date date = null;
+        for (int i = 0;i < a.length; i++) {
+
+            try {
+                date = sdf.parse(a[i]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            calendar1 = dateToCalendar(date);
+            System.out.println(calendar1.getTime());
+
+            List<Calendar> listaCalendar = new ArrayList<>();
+            listaCalendar.add(calendar1);
+            Calendar[] disabledDays1 = listaCalendar.toArray(new Calendar[listaCalendar.size()]);
+            dpd.setDisabledDays(disabledDays1);
+        }
+        //TODO: ACÁ TERMINA
+        */
+
+       return disabledDays1;
+    }
+
 }

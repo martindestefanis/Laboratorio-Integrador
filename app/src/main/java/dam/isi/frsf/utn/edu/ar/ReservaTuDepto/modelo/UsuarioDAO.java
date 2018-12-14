@@ -15,6 +15,12 @@ public interface UsuarioDAO {
     @Query("SELECT * FROM USUARIO WHERE correo = :correo AND nombre = :nombre")
     Usuario buscarPorCorreoNombre(String correo, String nombre);
 
+    @Query("SELECT * FROM Usuario WHERE ID_USUARIO = :UsuarioID")
+    UsuarioConReservas buscarPorIDConReserva(Integer UsuarioID);
+
+    @Query("SELECT * FROM Usuario")
+    List<UsuarioConReservas> buscarUsuarioConReservas();
+
     @Insert
     long insert(Usuario r);
 
