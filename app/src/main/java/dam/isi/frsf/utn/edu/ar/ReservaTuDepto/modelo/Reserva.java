@@ -13,6 +13,8 @@ import java.util.Date;
 @Entity
 public class Reserva implements Serializable {
 
+    public enum Estado {REALIZADO, CONFIRMADO, PENDIENTE}
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID_RESERVA")
     private Integer id;
@@ -20,12 +22,13 @@ public class Reserva implements Serializable {
     private Date fechaInicio;
     @TypeConverters(FechaConverter.class)
     private Date fechaFin;
+    @TypeConverters(EstadoConverter.class)
+    private Estado estado;
     @Embedded(prefix = "depto_")
     private Departamento departamento;
     private Double precio;
     @Embedded(prefix = "usu_")
     private Usuario usuario;
-    private Boolean confirmada;
 
     public Reserva(){}
 
@@ -81,19 +84,19 @@ public class Reserva implements Serializable {
         this.usuario = usuario;
     }
 
-    public Boolean getConfirmada() {
-        return confirmada;
-    }
-
-    public void setConfirmada(Boolean confirmada) {
-        this.confirmada = confirmada;
-    }
-
     public Departamento getDepartamento() {
         return departamento;
     }
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }

@@ -47,7 +47,6 @@ public class ReservaAdapter extends ArrayAdapter<Reserva> {
         TextView precioTextView = (TextView) row.findViewById(R.id.precioTextView);
         precioTextView.setText("Precio: " + df.format(reserva.getPrecio()));
         CheckBox confirmadaCheckBox = (CheckBox) row.findViewById(R.id.confirmadaCheckBox);
-        confirmadaCheckBox.setChecked(reserva.getConfirmada());
 
         return (row);
     }

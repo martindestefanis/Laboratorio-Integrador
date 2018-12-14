@@ -25,9 +25,20 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCuYHwH_F4qzlVLJYDJWIR5FZWS_eN5loA"/>
+            android:value="AIzaSyCuYHwH_F4qzlVLJYDJWIR5FZWS_eN5loA" />
 
-        <activity android:name=".ConfiguracionActivity"></activity>
+        <activity android:name=".ConfiguracionActivity" />
+
+        <receiver
+            android:name=".EstadoPedidoReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name=".EstadoPedidoReceiver.ESTADO_PENDIENTE" />
+                <action android:name=".EstadoPedidoReceiver.ESTADO_CONFIRMADO" />
+                <action android:name=".EstadoPedidoReceiver.ESTADO_REALIZADO" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

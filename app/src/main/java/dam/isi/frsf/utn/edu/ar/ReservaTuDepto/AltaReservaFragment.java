@@ -1,5 +1,6 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
@@ -53,7 +55,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
 
         unaReserva = new Reserva();
 
-        Toast.makeText(getContext(), "ATENCIÓN: Para poder realizar una reserva primero debe configurar su email y nombre de usuario en su perfil.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(), "ATENCIÓN: Para poder realizar una reserva primero debe configurar su email y nombre de usuario en su perfil.", Toast.LENGTH_LONG).show();
 
         btnFechaFin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +88,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                 );
 
                 dpd.setTitle("Ingrese la fecha de inicio de la reserva");
-                dpd.show(getActivity().getFragmentManager(), "DatePickerDialog");
+                dpd.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "DatePickerDialog");
             }
         });
 
@@ -108,15 +110,28 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                                 nuevoUsuario.setNombre(nombre);
                                 usuarioDAO.insert(nuevoUsuario);
 
+
                                 unaReserva.setUsuario(nuevoUsuario);
                             }
                             else{
                                 unaReserva.setUsuario(unUsuario);
                             }
-                            unaReserva.setConfirmada(true);
                             unaReserva.setDepartamento(selected);
                             unaReserva.setPrecio(selected.getPrecio());
+                            unaReserva.setEstado(Reserva.Estado.REALIZADO);
                             reservaDAO.insert(unaReserva);
+                            List<Reserva> lista = reservaDAO.getAll();
+                            for(Reserva re :lista) {
+                                if (re.getEstado().equals(Reserva.Estado.REALIZADO)) {
+                                    re.setEstado(Reserva.Estado.PENDIENTE);
+                                    reservaDAO.update(re);
+                                    Intent intent = new Intent(getActivity().getApplicationContext(), EstadoPedidoReceiver.class);
+                                    intent.setAction(EstadoPedidoReceiver.ESTADO_PENDIENTE);
+                                    intent.putExtra("idReserva", re.getId());
+                                    getActivity().getApplicationContext().sendBroadcast(intent);
+                                    getActivity().onBackPressed();
+                                }
+                            }
                         }
                     };
                     Thread t = new Thread(r);

@@ -4,18 +4,22 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
 @Dao
 public interface ReservaDAO {
     @Query("SELECT * FROM Reserva")
-    List<Reserva> getAll();
+     List<Reserva> getAll();
+
+    @Query("SELECT * FROM Reserva WHERE ID_RESERVA = :ReservaID")
+    Reserva buscarPorID(Integer ReservaID);
 
     @Insert
     long insert(Reserva r);
 
-    @Insert
+    @Update
     void update(Reserva r);
 
     @Delete
