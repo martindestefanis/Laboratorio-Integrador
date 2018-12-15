@@ -39,6 +39,19 @@
                 <action android:name=".EstadoPedidoReceiver.ESTADO_REALIZADO" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".FirebaseInstanceIdService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".DptoFirebaseInstanceIdService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".DptoMessagingService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
