@@ -69,8 +69,8 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                     Runnable r1 = new Runnable() {
                         @Override
                         public void run() {
-                            if (!reservaDAO.getAll().isEmpty()) {
-                                Date min = minimo(unaReserva.getFechaInicio(), reservaDAO.getAll());
+                            if (!reservaDAO.buscarPorDepto(selected.getId()).isEmpty()) {
+                                Date min = minimo(unaReserva.getFechaInicio(), reservaDAO.buscarPorDepto(selected.getId()));
                                 if(min != null){
                                     List<Date> listaDates = getDates(unaReserva.getFechaInicio(), min);
                                     Calendar calendar = Calendar.getInstance();
@@ -113,7 +113,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                     @Override
                     public void run() {
                         Calendar calendar = Calendar.getInstance();
-                        List<Reserva> listaReservas = reservaDAO.getAll();
+                        List<Reserva> listaReservas = reservaDAO.buscarPorDepto(selected.getId());
                         for(Reserva reserva : listaReservas){
                             List<Date> listaDates = getDates(reserva.getFechaInicio(),reserva.getFechaFin());
                             for(Date date : listaDates){
