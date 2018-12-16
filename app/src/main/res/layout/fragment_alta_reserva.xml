@@ -8,7 +8,8 @@
         android:id="@+id/tvAdvertencia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/AdvertenciaUsuario"/>
+        android:text="@string/AdvertenciaUsuario"
+        android:textColor="@color/rojo"/>
 
     <Button
         android:id="@+id/btnFechaInicio"

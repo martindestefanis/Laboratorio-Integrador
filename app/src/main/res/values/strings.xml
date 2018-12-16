@@ -25,8 +25,6 @@
     <string name="reservar">Reservar</string>
     <string name="ingresar_fecha_de_fin">INGRESAR FECHA DE FIN</string>
     <string name="ingresar_fecha_de_inicio">INGRESAR FECHA DE INICIO</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="AdvertenciaUsuario">ATENCIÓN: Para poder realizar una reserva primero debe configurar su email y nombre de usuario en su perfil.</string>
+    <string name="AdvertenciaUsuario1">ATENCIÓN: Para poder realizar una reserva debe hacer un click largo en un departamento.</string>
 </resources>

@@ -27,8 +27,6 @@ import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.ReservaDAO;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Usuario;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioDAO;
 
-import static java.lang.StrictMath.toIntExact;
-
 public class AltaReservaFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
     private Departamento selected;
     private Button btnReserva, btnFechaInicio, btnFechaFin;
@@ -142,40 +140,44 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                 final String email = prefs.getString("correo_preference"," ");
                 final String nombre = prefs.getString("nombre_preference", " ");
 
-                if(validarPreferencias(email, nombre) && validarFechaNoNull()){
-                    Runnable r = new Runnable() {
-                        @Override
-                        public void run() {
-                            unUsuario = usuarioDAO.buscarPorCorreoNombre(email, nombre);
-                            if(unUsuario == null){
-                                Usuario nuevoUsuario = new Usuario();
-                                nuevoUsuario.setCorreo(email);
-                                nuevoUsuario.setNombre(nombre);
-                                long id = usuarioDAO.insert(nuevoUsuario);
-                                unaReserva.setUsuario(usuarioDAO.buscarPorID(id));
-                            }
-                            else{
-                                unaReserva.setUsuario(unUsuario);
-                            }
-                            unaReserva.setDepartamento(selected);
-                            unaReserva.setPrecio(selected.getPrecio());
-                            unaReserva.setEstado(Reserva.Estado.REALIZADO);
-                            reservaDAO.insert(unaReserva);
-                            List<Reserva> lista = reservaDAO.getAll();
-                            for(Reserva re : lista) {
-                                if(re.getEstado().equals(Reserva.Estado.REALIZADO)) {
-                                    re.setEstado(Reserva.Estado.PENDIENTE);
-                                    reservaDAO.update(re);
-                                    Intent intent = new Intent(getActivity().getApplicationContext(), EstadoPedidoReceiver.class);
-                                    intent.setAction(EstadoPedidoReceiver.ESTADO_PENDIENTE);
-                                    intent.putExtra("idReserva", re.getId());
-                                    getActivity().getApplicationContext().sendBroadcast(intent);
+                if(validarPreferencias(email, nombre)) {
+                    if (validarFechaNoNull()) {
+                        Runnable r = new Runnable() {
+                            @Override
+                            public void run() {
+                                unUsuario = usuarioDAO.buscarPorCorreoNombre(email, nombre);
+                                if (unUsuario == null) {
+                                    Usuario nuevoUsuario = new Usuario();
+                                    nuevoUsuario.setCorreo(email);
+                                    nuevoUsuario.setNombre(nombre);
+                                    long id = usuarioDAO.insert(nuevoUsuario);
+                                    unaReserva.setUsuario(usuarioDAO.buscarPorID(id));
+                                } else {
+                                    unaReserva.setUsuario(unUsuario);
+                                }
+                                unaReserva.setDepartamento(selected);
+                                unaReserva.setPrecio(selected.getPrecio());
+                                unaReserva.setEstado(Reserva.Estado.REALIZADO);
+                                reservaDAO.insert(unaReserva);
+                                List<Reserva> lista = reservaDAO.getAll();
+                                for (Reserva re : lista) {
+                                    if (re.getEstado().equals(Reserva.Estado.REALIZADO)) {
+                                        re.setEstado(Reserva.Estado.PENDIENTE);
+                                        reservaDAO.update(re);
+                                        Intent intent = new Intent(getActivity().getApplicationContext(), EstadoPedidoReceiver.class);
+                                        intent.setAction(EstadoPedidoReceiver.ESTADO_PENDIENTE);
+                                        intent.putExtra("idReserva", re.getId());
+                                        getActivity().getApplicationContext().sendBroadcast(intent);
+                                    }
                                 }
                             }
-                        }
-                    };
-                    Thread t = new Thread(r);
-                    t.start();
+                        };
+                        Thread t = new Thread(r);
+                        t.start();
+                    }
+                    else{
+                        Toast.makeText(getContext(), "Error: Debe ingresar una fecha de inicio y de fin", Toast.LENGTH_LONG).show();
+                    }
                 }
                 else{
                     Toast.makeText(getContext(), "Error: Para poder realizar una reserva primero debe configurar su email y nombre de usuario en su perfil.", Toast.LENGTH_LONG).show();

@@ -74,7 +74,6 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
             Thread t = new Thread(r);
             t.start();
         }
-        Toast.makeText(getContext(), "Para reservar el departamento, mantenga pulsado sobre el mismo.", Toast.LENGTH_LONG).show();
     }
 
     private void llenarLista(final List<Departamento> listaDepartamentos){

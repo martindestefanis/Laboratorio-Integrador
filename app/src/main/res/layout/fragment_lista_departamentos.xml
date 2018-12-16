@@ -4,6 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:id="@+id/tvAdvertencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/AdvertenciaUsuario1"
+        android:textColor="@color/rojo"/>
+    <TextView
         android:id="@+id/estadoBusqueda"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

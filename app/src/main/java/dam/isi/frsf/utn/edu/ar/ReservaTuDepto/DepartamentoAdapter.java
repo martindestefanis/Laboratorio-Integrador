@@ -38,7 +38,7 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
         }
         final Departamento departamento = (Departamento) super.getItem(position);
         TextView txtCiudad = (TextView) row.findViewById(R.id.ciudad);
-        txtCiudad.setText("Ciudad: " + departamento.getCiudad().toString());
+        txtCiudad.setText("Ciudad: " + departamento.getCiudad().getNombre());
         TextView txtDescripcion = (TextView) row.findViewById(R.id.descripcion);
         txtDescripcion.setText("Descripción: " + departamento.getDescripcion());
         TextView txtPrecio = (TextView) row.findViewById(R.id.precio);
