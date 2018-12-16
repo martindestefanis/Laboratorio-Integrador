@@ -88,6 +88,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                     Thread t1 = new Thread(r1);
                     t1.start();
 
+                    dpd.setMinDate(now);
                     dpd.setTitle("Ingrese la fecha de fin de la reserva");
                     dpd.show(getActivity().getFragmentManager(), "DatePickerDialog");
                 }
@@ -128,6 +129,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                 Thread t1 = new Thread(r1);
                 t1.start();
 
+                dpd.setMinDate(now);
                 dpd.setTitle("Ingrese la fecha de inicio de la reserva");
                 dpd.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "DatePickerDialog");
             }
