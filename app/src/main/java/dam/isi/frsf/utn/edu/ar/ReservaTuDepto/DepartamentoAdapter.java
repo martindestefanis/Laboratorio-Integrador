@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -37,13 +38,29 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
         }
         final Departamento departamento = (Departamento) super.getItem(position);
         TextView txtCiudad = (TextView) row.findViewById(R.id.ciudad);
-        txtCiudad.setText(departamento.getCiudad().toString());
+        txtCiudad.setText("Ciudad: " + departamento.getCiudad().toString());
         TextView txtDescripcion = (TextView) row.findViewById(R.id.descripcion);
-        txtDescripcion.setText(departamento.getDescripcion());
+        txtDescripcion.setText("Descripción: " + departamento.getDescripcion());
         TextView txtPrecio = (TextView) row.findViewById(R.id.precio);
-        txtPrecio.setText("$" + (df.format(departamento.getPrecio())));
+        txtPrecio.setText("Precio: $" + (df.format(departamento.getPrecio())));
         TextView txtCapacidad = (TextView) row.findViewById(R.id.capacidadMax);
-        txtCapacidad.setText(departamento.getCapacidadMaxima()+".");
+        txtCapacidad.setText("Capacidad: " + departamento.getCapacidadMaxima()+".");
+        TextView txtDireccion = (TextView) row.findViewById(R.id.direccion);
+        txtDireccion.setText("Dirección: " + departamento.getDireccion());
+        TextView txtCantHab = (TextView) row.findViewById(R.id.cantHabitaciones);
+        txtCantHab.setText("Cantidad de habitaciones: " + departamento.getCantidadHabitaciones());
+        TextView txtCantCamas = (TextView) row.findViewById(R.id.cantCamas);
+        txtCantCamas.setText("Cantidad de camas: " + departamento.getCantidadCamas());
+        TextView txtFumador = (TextView) row.findViewById(R.id.fumador);
+        if(departamento.getNoFumador()) {
+            txtFumador.setText("Permitido fumar: Sí");
+        }
+        else {
+            txtFumador.setText("Permitido fumar: No");
+        }
+        TextView txtTelProp = (TextView) row.findViewById(R.id.telProp);
+        txtTelProp.setText("Teléfono propietario: " + departamento.getTelefonoPropietario());
+
         return (row);
     }
 }
