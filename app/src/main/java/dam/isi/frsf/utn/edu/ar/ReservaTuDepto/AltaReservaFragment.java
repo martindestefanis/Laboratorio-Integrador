@@ -27,6 +27,8 @@ import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.ReservaDAO;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Usuario;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioDAO;
 
+import static java.lang.StrictMath.toIntExact;
+
 public class AltaReservaFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
     private Departamento selected;
     private Button btnReserva, btnFechaInicio, btnFechaFin;
@@ -137,8 +139,8 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
             @Override
             public void onClick(View v) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-                final String email = prefs.getString("correo_preference","");
-                final String nombre = prefs.getString("nombre_preference", "");
+                final String email = prefs.getString("correo_preference"," ");
+                final String nombre = prefs.getString("nombre_preference", " ");
 
                 if(validarPreferencias(email, nombre) && validarFechaNoNull()){
                     Runnable r = new Runnable() {
@@ -149,8 +151,8 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                                 Usuario nuevoUsuario = new Usuario();
                                 nuevoUsuario.setCorreo(email);
                                 nuevoUsuario.setNombre(nombre);
-                                usuarioDAO.insert(nuevoUsuario);
-                                unaReserva.setUsuario(nuevoUsuario);
+                                long id = usuarioDAO.insert(nuevoUsuario);
+                                unaReserva.setUsuario(usuarioDAO.buscarPorID(id));
                             }
                             else{
                                 unaReserva.setUsuario(unUsuario);
@@ -158,12 +160,10 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                             unaReserva.setDepartamento(selected);
                             unaReserva.setPrecio(selected.getPrecio());
                             unaReserva.setEstado(Reserva.Estado.REALIZADO);
-                            Log.d("fechaReservaI",unaReserva.getFechaInicio().toString());
-                            Log.d("fechaReservaF",unaReserva.getFechaFin().toString());
                             reservaDAO.insert(unaReserva);
                             List<Reserva> lista = reservaDAO.getAll();
-                            for(Reserva re :lista) {
-                                if (re.getEstado().equals(Reserva.Estado.REALIZADO)) {
+                            for(Reserva re : lista) {
+                                if(re.getEstado().equals(Reserva.Estado.REALIZADO)) {
                                     re.setEstado(Reserva.Estado.PENDIENTE);
                                     reservaDAO.update(re);
                                     Intent intent = new Intent(getActivity().getApplicationContext(), EstadoPedidoReceiver.class);

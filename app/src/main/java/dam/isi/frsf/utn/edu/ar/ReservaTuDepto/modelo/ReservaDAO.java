@@ -1,7 +1,6 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
@@ -17,11 +16,8 @@ public interface ReservaDAO {
     Reserva buscarPorID(Integer ReservaID);
 
     @Insert
-    long insert(Reserva r);
+    long insert(Reserva reserva);
 
     @Update
-    void update(Reserva r);
-
-    @Delete
-    void delete(Reserva r);
+    void update(Reserva reserva);
 }

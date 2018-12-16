@@ -64,10 +64,6 @@ public class Reserva implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public Departamento  getAlojamiento() {
-        return departamento;
-    }
-
     public Double getPrecio() {
         return precio;
     }

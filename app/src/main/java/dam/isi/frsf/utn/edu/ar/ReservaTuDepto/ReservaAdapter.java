@@ -1,12 +1,12 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -46,7 +46,20 @@ public class ReservaAdapter extends ArrayAdapter<Reserva> {
         departamentoTextView.setText("Ciudad: "+ reserva.getDepartamento().getCiudad().getNombre());
         TextView precioTextView = (TextView) row.findViewById(R.id.precioTextView);
         precioTextView.setText("Precio: " + df.format(reserva.getPrecio()));
-        CheckBox confirmadaCheckBox = (CheckBox) row.findViewById(R.id.confirmadaCheckBox);
+        TextView estadoTextView = (TextView) row.findViewById(R.id.estadoTextView);
+        estadoTextView.setText("Estado: " + reserva.getEstado());
+
+        switch (reserva.getEstado()){
+            case REALIZADO:
+                estadoTextView.setTextColor(Color.DKGRAY);
+                break;
+            case CONFIRMADO:
+                estadoTextView.setTextColor(Color.GREEN);
+                break;
+            case PENDIENTE:
+                estadoTextView.setTextColor(Color.BLUE);
+                break;
+        }
 
         return (row);
     }

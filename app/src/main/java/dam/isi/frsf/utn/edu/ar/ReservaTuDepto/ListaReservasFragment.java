@@ -1,6 +1,8 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,19 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
-import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Reserva;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.ReservaDAO;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioConReservas;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioDAO;
 
 public class ListaReservasFragment extends Fragment {
 
     private TextView tvEstadoBusqueda;
     private ListView listarReservas;
     private ReservaAdapter reservaAdapter;
-    private List<Reserva> lista;
+    private UsuarioConReservas usuarioConReservas;
     private ReservaDAO reservaDAO;
+    private UsuarioDAO usuarioDAO;
 
     public ListaReservasFragment() {
         // Required empty public constructor
@@ -34,6 +36,7 @@ public class ListaReservasFragment extends Fragment {
         listarReservas = (ListView) v.findViewById(R.id.listarReservas);
         tvEstadoBusqueda = (TextView) v.findViewById(R.id.estadoBusquedaReserva);
         reservaDAO = MyDatabase.getInstance(this.getActivity()).getReservaDAO();
+        usuarioDAO = MyDatabase.getInstance(this.getActivity()).getUsuarioDAO();
         return v;
     }
 
@@ -43,11 +46,14 @@ public class ListaReservasFragment extends Fragment {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                lista = reservaDAO.getAll();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String email = prefs.getString("correo_preference","");
+                String nombre = prefs.getString("nombre_preference", "");
+                usuarioConReservas = usuarioDAO.buscarUsuarioConReservas(email, nombre);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(lista.isEmpty()) {
+                        if(usuarioConReservas == null || usuarioConReservas.reservas.isEmpty()) {
                             tvEstadoBusqueda.setText("No se encontraron resultados");
                         }
                         else {
@@ -58,7 +64,7 @@ public class ListaReservasFragment extends Fragment {
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            reservaAdapter = new ReservaAdapter(getActivity().getApplicationContext(), lista);
+                                            reservaAdapter = new ReservaAdapter(getActivity().getApplicationContext(), usuarioConReservas.reservas);
                                             listarReservas.setAdapter(reservaAdapter);
                                         }
                                     });

@@ -9,13 +9,13 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/fechaFinTextView"
+            android:id="@+id/fechaInicioTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/fechaInicioTextView"
+            android:id="@+id/fechaFinTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -31,24 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/estadoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:text="Confirmada "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView10"
-            android:layout_weight="1" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/confirmadaCheckBox"
-            android:layout_weight="1"
-            android:focusable="false"
-            android:clickable="false" />
-    </LinearLayout>
 </LinearLayout>
