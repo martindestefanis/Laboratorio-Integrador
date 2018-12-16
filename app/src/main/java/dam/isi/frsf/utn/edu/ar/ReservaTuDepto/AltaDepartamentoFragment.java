@@ -111,7 +111,8 @@ public class AltaDepartamentoFragment extends Fragment {
                                     else {
                                         ciudad = new Ciudad();
                                         ciudad.setNombre(edtCiudad.getText().toString().toUpperCase());
-                                        ciudadDAO.insert(ciudad);
+                                        long id = ciudadDAO.insert(ciudad);
+                                        ciudad = ciudadDAO.buscarPorID(id);
                                         departamento.setCiudad(ciudad);
                                     }
                                 }
