@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +25,6 @@ import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Reserva;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.ReservaDAO;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Usuario;
-import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioConReservas;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioDAO;
 
 public class AltaReservaFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
@@ -58,26 +55,46 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
 
         unaReserva = new Reserva();
 
-        //Toast.makeText(getContext(), "ATENCIÓN: Para poder realizar una reserva primero debe configurar su email y nombre de usuario en su perfil.", Toast.LENGTH_LONG).show();
-
         btnFechaFin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                esFechaInicio = false;
+                if(unaReserva.getFechaInicio() != null){
+                    esFechaInicio = false;
+                    Calendar now = Calendar.getInstance();
+                    final DatePickerDialog dpd = DatePickerDialog.newInstance(AltaReservaFragment.this,
+                            now.get(Calendar.YEAR), // Initial year selection
+                            now.get(Calendar.MONTH), // Initial month selection
+                            now.get(Calendar.DAY_OF_MONTH) // Inital day selection
+                    );
+                    Runnable r1 = new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!reservaDAO.getAll().isEmpty()) {
+                                Date min = minimo(unaReserva.getFechaInicio(), reservaDAO.getAll());
+                                if(min != null){
+                                    List<Date> listaDates = getDates(unaReserva.getFechaInicio(), min);
+                                    Calendar calendar = Calendar.getInstance();
+                                    for (Date date : listaDates) {
+                                        calendar = dateToCalendar(date);
+                                        List<Calendar> listaCalendar = new ArrayList<>();
+                                        listaCalendar.add(calendar);
+                                        Calendar[] enabledDays = listaCalendar.toArray(new Calendar[listaCalendar.size()]);
+                                        dpd.setSelectableDays(enabledDays);
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    Thread t1 = new Thread(r1);
+                    t1.start();
 
-                Calendar now = Calendar.getInstance();
-                DatePickerDialog dpd = DatePickerDialog.newInstance(AltaReservaFragment.this,
-                        now.get(Calendar.YEAR), // Initial year selection
-                        now.get(Calendar.MONTH), // Initial month selection
-                        now.get(Calendar.DAY_OF_MONTH) // Inital day selection
-                );
-
-                dpd.setTitle("Ingrese la fecha de fin de la reserva");
-                dpd.show(getActivity().getFragmentManager(), "DatePickerDialog");
-
+                    dpd.setTitle("Ingrese la fecha de fin de la reserva");
+                    dpd.show(getActivity().getFragmentManager(), "DatePickerDialog");
+                }
+                else {
+                    Toast.makeText(getContext(), "Primero debe seleccionar una fecha de inicio", Toast.LENGTH_LONG).show();                }
             }
         });
-
 
         btnFechaInicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,14 +102,31 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                 esFechaInicio = true;
 
                 Calendar now = Calendar.getInstance();
-                DatePickerDialog dpd = DatePickerDialog.newInstance(AltaReservaFragment.this,
+                final DatePickerDialog dpd = DatePickerDialog.newInstance(AltaReservaFragment.this,
                         now.get(Calendar.YEAR), // Initial year selection
                         now.get(Calendar.MONTH), // Initial month selection
                         now.get(Calendar.DAY_OF_MONTH) // Inital day selection
                 );
-                //TODO:ACA SE LLAMA
-               // List<Calendar[]> disabledDays1 = calendarDeFechasADeshabilitar();
-                //dpd.setDisabledDays(disabledDays1.get(0));
+
+                Runnable r1 = new Runnable() {
+                    @Override
+                    public void run() {
+                        Calendar calendar = Calendar.getInstance();
+                        List<Reserva> listaReservas = reservaDAO.getAll();
+                        for(Reserva reserva : listaReservas){
+                            List<Date> listaDates = getDates(reserva.getFechaInicio(),reserva.getFechaFin());
+                            for(Date date : listaDates){
+                                calendar = dateToCalendar(date);
+                                List<Calendar> listaCalendar = new ArrayList<>();
+                                listaCalendar.add(calendar);
+                                Calendar[] disabledDays = listaCalendar.toArray(new Calendar[listaCalendar.size()]);
+                                dpd.setDisabledDays(disabledDays);
+                            }
+                        }
+                    }
+                };
+                Thread t1 = new Thread(r1);
+                t1.start();
 
                 dpd.setTitle("Ingrese la fecha de inicio de la reserva");
                 dpd.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "DatePickerDialog");
@@ -106,7 +140,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                 final String email = prefs.getString("correo_preference","");
                 final String nombre = prefs.getString("nombre_preference", "");
 
-                if(validarPreferencias(email, nombre)){
+                if(validarPreferencias(email, nombre) && validarFechaNoNull()){
                     Runnable r = new Runnable() {
                         @Override
                         public void run() {
@@ -116,8 +150,6 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                                 nuevoUsuario.setCorreo(email);
                                 nuevoUsuario.setNombre(nombre);
                                 usuarioDAO.insert(nuevoUsuario);
-
-
                                 unaReserva.setUsuario(nuevoUsuario);
                             }
                             else{
@@ -150,7 +182,6 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                 }
             }
         });
-
         return v;
     }
 
@@ -162,109 +193,76 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
             fecha.setMonth(monthOfYear);
             fecha.setDate(dayOfMonth);
             unaReserva.setFechaInicio(fecha);
-            Log.d("fecha", "inicio: "+fecha.getDate()+"/"+fecha.getMonth()+"/"+fecha.getYear());
         }
         else{
             Date fecha = new Date();
             fecha.setYear(year-1900);
             fecha.setMonth(monthOfYear);
             fecha.setDate(dayOfMonth);
-            unaReserva.setFechaFin(fecha);
-            Log.d("fecha", "fin: "+fecha.getDate()+"/"+fecha.getMonth()+"/"+fecha.getYear());
+            if(!fecha.before(unaReserva.getFechaInicio())){
+                unaReserva.setFechaFin(fecha);
+            }
+            else{
+                Toast.makeText(getContext(), "Error: la fecha de fin no puede ser antes que la fecha de inicio", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
     public boolean validarPreferencias(String email, String nombre){
         boolean hayPrefs = false;
-
         if(!email.equals(" ") || !nombre.equals(" ")){
             hayPrefs = true;
         }
-
         return hayPrefs;
     }
 
+    public boolean validarFechaNoNull(){
+        if(unaReserva.getFechaInicio()==null || unaReserva.getFechaFin()==null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
     private static List<Date> getDates(Date date1, Date date2) {
         ArrayList<Date> dates = new ArrayList<Date>();
-
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(date1);
-
         Calendar cal2 = Calendar.getInstance();
         cal2.setTime(date2);
-
-        while(!cal1.after(cal2))
-        {
+        while(!cal1.after(cal2)) {
             dates.add(cal1.getTime());
             cal1.add(Calendar.DATE, 1);
         }
         return dates;
     }
+
     private Calendar dateToCalendar(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
     }
 
-
-    /*private List<Calendar[]> calendarDeFechasADeshabilitar(){
-        Calendar calendar1 = Calendar.getInstance();
-        List<Reserva> listaReservas = new ArrayList<>();
-        List<UsuarioConReservas> listaUsuarioConReservas = new List<UsuarioConReservas>;
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                List<UsuarioConReservas> listaUsuarioConReservas = usuarioDAO.buscarUsuarioConReservas();
+    private Date minimo (Date fechaInicio, List<Reserva> listaReservas){
+        Date min = null;
+        for(Reserva r : listaReservas){
+            if(r.getFechaInicio().after(fechaInicio)){
+                min = r.getFechaInicio();
+                break;
             }
-        };
-        Thread t = new Thread(r);
-        t.start();
-
-        for(UsuarioConReservas listUsrConRes : listaUsuarioConReservas){
-            listaReservas = listUsrConRes.reservas;
         }
-        List<Date> listaDates = new ArrayList<Date>();
-        List<Calendar[]> disabledDays1 = new ArrayList<Calendar[]>();
-
-        for(Reserva reserva:listaReservas){
-            if(reserva.getDepartamento().getId().equals(selected.getId())){
-                listaDates = getDates(reserva.getFechaInicio(),reserva.getFechaFin());
-                for(Date date:listaDates){
-                    calendar1 = dateToCalendar(date);
-                    List<Calendar> listaCalendar = new ArrayList<>();
-                    listaCalendar.add(calendar1);
-                    disabledDays1.add(listaCalendar.toArray(new Calendar[listaCalendar.size()]));
-                   // Calendar[] disabledDays1 = listaCalendar.toArray(new Calendar[listaCalendar.size()]);
+        if(min != null){
+            for(Reserva r : listaReservas){
+                Log.d("fecha", "min for: " + min);
+                Log.d("fecha", "fecha inicio reserva bdd: " + r.getFechaInicio());
+                Log.d("fecha", "fecha inicio: " + fechaInicio);
+                if(r.getFechaInicio().before(min) && r.getFechaInicio().after(fechaInicio)){
+                    Log.d("fecha", "min if: " + min);
+                    min = r.getFechaInicio();
                 }
             }
         }
-
-        /* //TODO:PROBANDO LO DE LAS FECHAS DISABLE
-        Calendar calendar1 = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String[] a = {"20/12/2018","21/12/2018","22/12/2018"};
-        java.util.Date date = null;
-        for (int i = 0;i < a.length; i++) {
-
-            try {
-                date = sdf.parse(a[i]);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            calendar1 = dateToCalendar(date);
-            System.out.println(calendar1.getTime());
-
-            List<Calendar> listaCalendar = new ArrayList<>();
-            listaCalendar.add(calendar1);
-            Calendar[] disabledDays1 = listaCalendar.toArray(new Calendar[listaCalendar.size()]);
-            dpd.setDisabledDays(disabledDays1);
-        }
-        //TODO: ACÁ TERMINA
-        */
-
-      /* return disabledDays1;*/
+        return min;
     }
-
-//}
+}
