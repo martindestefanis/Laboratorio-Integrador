@@ -9,6 +9,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Reserva;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.ReservaDAO;
@@ -22,6 +24,7 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(final Context context, final Intent intent) {
+            final SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
 
             reservaDAO = MyDatabase.getInstance(context).getReservaDAO();
 
@@ -39,10 +42,10 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
                         Notification notification = new NotificationCompat.Builder(context, "CANAL01")
                                 //Ver icono
                                 .setSmallIcon(R.drawable.ic_launcher_background)
-                                .setContentTitle("Tu reserva fue confirmada")
+                                .setContentTitle("Tu reserva nro: " + reserva.getId() + " fue confirmada")
                                 .setStyle(new NotificationCompat.InboxStyle()
-                                        .addLine("Desde: " + reserva.getFechaInicio())
-                                        .addLine("Hasta: " + reserva.getFechaFin()))
+                                        .addLine("Desde: " + dt.format(reserva.getFechaInicio()))
+                                        .addLine("Hasta: " + dt.format(reserva.getFechaFin())))
                                 .setContentIntent(pendingIntent)
                                 .setAutoCancel(true)
                                 .build();

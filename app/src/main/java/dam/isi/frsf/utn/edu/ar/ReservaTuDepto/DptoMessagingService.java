@@ -21,15 +21,14 @@ public class DptoMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        //repositorioPedido = new PedidoRepository();
         reservaDAO = MyDatabase.getInstance(this).getReservaDAO();
         r = new Reserva();
         if (remoteMessage.getNotification() != null) {
             String titulo = remoteMessage.getNotification().getTitle();
             String texto = remoteMessage.getNotification().getBody();
-            int pedidoId = Integer.parseInt(titulo);
-            r = reservaDAO.buscarPorID(pedidoId);
-            if(texto.equals("listo")) {
+            int reservaId = Integer.parseInt(titulo);
+            r = reservaDAO.buscarPorID(reservaId);
+            if(texto.equals("confirmado")) {
                 r.setEstado(Reserva.Estado.CONFIRMADO);
                 reservaDAO.update(r);
                 Intent i = new Intent(getApplicationContext(),EstadoPedidoReceiver.class);

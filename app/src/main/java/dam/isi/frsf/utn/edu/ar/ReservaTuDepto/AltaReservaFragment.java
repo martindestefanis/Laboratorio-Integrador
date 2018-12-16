@@ -91,8 +91,8 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                         now.get(Calendar.DAY_OF_MONTH) // Inital day selection
                 );
                 //TODO:ACA SE LLAMA
-                List<Calendar[]> disabledDays1 = calendarDeFechasADeshabilitar();
-                dpd.setDisabledDays(disabledDays1.get(0));
+               // List<Calendar[]> disabledDays1 = calendarDeFechasADeshabilitar();
+                //dpd.setDisabledDays(disabledDays1.get(0));
 
                 dpd.setTitle("Ingrese la fecha de inicio de la reserva");
                 dpd.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "DatePickerDialog");
@@ -208,7 +208,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
     }
 
 
-    private List<Calendar[]> calendarDeFechasADeshabilitar(){
+    /*private List<Calendar[]> calendarDeFechasADeshabilitar(){
         Calendar calendar1 = Calendar.getInstance();
         List<Reserva> listaReservas = new ArrayList<>();
         List<UsuarioConReservas> listaUsuarioConReservas = new List<UsuarioConReservas>;
@@ -264,7 +264,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
         //TODO: ACÁ TERMINA
         */
 
-       return disabledDays1;
+      /* return disabledDays1;*/
     }
 
-}
+//}
