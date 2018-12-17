@@ -12,6 +12,12 @@
         android:textColor="@color/colorPrimary"
         android:textAlignment="center"/>
 
+    <Button
+        android:id="@+id/btnBuscarEnMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/buscar_en_mapa" />
+
     <Spinner
         android:id="@+id/spinnerCiudad"
         android:layout_width="match_parent"
