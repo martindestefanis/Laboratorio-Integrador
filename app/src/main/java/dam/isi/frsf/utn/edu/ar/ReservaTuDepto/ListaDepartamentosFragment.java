@@ -68,7 +68,13 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
             Runnable r = new Runnable() {
                 @Override
                 public void run() {
-                    llenarLista(departamentoDAO.getAll());
+                    final List<Departamento> listaDeptos = departamentoDAO.getAll();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            llenarLista(listaDeptos);
+                        }
+                    });
                 }
             };
             Thread t = new Thread(r);
@@ -81,23 +87,10 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
             tvEstadoBusqueda.setText("No se encontraron resultados");
         } else {
             tvEstadoBusqueda.setVisibility(View.GONE);
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            departamentosAdapter = new DepartamentoAdapter(getActivity().getApplicationContext(), listaDepartamentos);
-                            listaAlojamientos.setAdapter(departamentosAdapter);
-                        }
-                    });
-                }
-            };
-            Thread t = new Thread(r);
-            t.start();
+            departamentosAdapter = new DepartamentoAdapter(getActivity().getApplicationContext(), listaDepartamentos);
+            listaAlojamientos.setAdapter(departamentosAdapter);
         }
     }
-
 
     @Override
     public void busquedaFinalizada(List<Departamento> listaDepartamento) {
