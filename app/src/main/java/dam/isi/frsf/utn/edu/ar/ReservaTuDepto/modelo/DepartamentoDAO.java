@@ -16,4 +16,7 @@ public interface DepartamentoDAO {
 
     @Query("SELECT * FROM Departamento WHERE ID_DEPTO = :DeptoID")
     Departamento buscarPorID(Integer DeptoID);
+
+    @Query("SELECT * FROM Departamento WHERE ciudad_ID_CIUDAD = :ID_CIUDAD")
+    List<Departamento> buscarPorCiudad(Integer ID_CIUDAD);
 }

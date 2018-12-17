@@ -95,6 +95,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 fragmentTransaction = true;
                 break;
+            case R.id.nav_mapa:
+                tag = "fragmentFormDeptoMapa";
+                fragment =  getSupportFragmentManager().findFragmentByTag(tag);
+                if(fragment==null) {
+                    fragment = new DeptosEnMapaFragment();
+                }
+                fragmentTransaction = true;
+                break;
         }
 
         if(fragmentTransaction) {

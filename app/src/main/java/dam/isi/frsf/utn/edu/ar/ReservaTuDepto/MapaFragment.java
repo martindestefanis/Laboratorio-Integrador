@@ -17,7 +17,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.AppDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
@@ -28,8 +32,10 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
     private GoogleMap miMapa;
     private int tipoMapa = 0;
     private int idDepto = 0;
+    private int idCiudad = 0;
     private OnMapaListener listener;
     private DepartamentoDAO departamentoDAO;
+    private List<Departamento> listaDepartamento;
 
     public MapaFragment() {
 
@@ -46,6 +52,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
         if(argumentos != null) {
             tipoMapa = argumentos .getInt("tipo_mapa",0);
             idDepto = argumentos.getInt("idDepto",0);
+            idCiudad = argumentos.getInt("idCiudad",0);
         }
         getMapAsync(this);
         return rootView;
@@ -67,15 +74,9 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
             case 2:
                 cargarMapaConUnDepto(idDepto);
                 break;
-           /* case 3:
-                cargarMapaConReclamos();
+            case 3:
+                cargarMapaConCiudadDepartamentos(idCiudad);
                 break;
-            case 4:
-                addHeatMap();
-                break;
-            case 5:
-                cargarMapaConReclamosDeUnTipo(reclamoTipo);
-                break;*/
         }
     }
 
@@ -120,5 +121,33 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
         Thread t = new Thread(r);
         t.start();
     }
+
+    public void cargarMapaConCiudadDepartamentos(final int idCiudad){
+        departamentoDAO = MyDatabase.getInstance(getContext()).getDepartamentoDAO();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                listaDepartamento = departamentoDAO.buscarPorCiudad(idCiudad);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        for(Departamento d : listaDepartamento){
+                            Marker marker = miMapa.addMarker(new MarkerOptions()
+                                    .position(new LatLng(d.getLatitud(),d.getLongitud()))
+                                    .title("[" + d.getDescripcion() + "]")
+                                    .snippet(d.getDireccion()));
+                            builder.include(marker.getPosition());
+                        }
+                        LatLngBounds LIMITE = builder.build();
+                        miMapa.moveCamera(CameraUpdateFactory.newLatLngBounds(LIMITE, 10));
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
 
 }
