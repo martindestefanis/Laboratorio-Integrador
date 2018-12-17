@@ -82,6 +82,30 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                                         dpd.setSelectableDays(enabledDays);
                                     }
                                 }
+                                else{
+                                    Date hoy = new Date();
+                                    List<Date> listaDates = getDates(hoy, unaReserva.getFechaInicio());
+                                    Calendar calendar = Calendar.getInstance();
+                                    for (Date date : listaDates) {
+                                        calendar = dateToCalendar(date);
+                                        List<Calendar> listaCalendar = new ArrayList<>();
+                                        listaCalendar.add(calendar);
+                                        Calendar[] disabledDays = listaCalendar.toArray(new Calendar[listaCalendar.size()]);
+                                        dpd.setDisabledDays(disabledDays);
+                                    }
+                                }
+                            }
+                            else{
+                                Date hoy = new Date();
+                                List<Date> listaDates = getDates(hoy, unaReserva.getFechaInicio());
+                                Calendar calendar = Calendar.getInstance();
+                                for (Date date : listaDates) {
+                                    calendar = dateToCalendar(date);
+                                    List<Calendar> listaCalendar = new ArrayList<>();
+                                    listaCalendar.add(calendar);
+                                    Calendar[] disabledDays = listaCalendar.toArray(new Calendar[listaCalendar.size()]);
+                                    dpd.setDisabledDays(disabledDays);
+                                }
                             }
                         }
                     };
@@ -184,6 +208,13 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                 else{
                     Toast.makeText(getContext(), "Error: Para poder realizar una reserva primero debe configurar su email y nombre de usuario en su perfil.", Toast.LENGTH_LONG).show();
                 }
+
+                Fragment f = new ListaReservasFragment();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contenido, f)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         return v;
@@ -203,12 +234,7 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
             fecha.setYear(year-1900);
             fecha.setMonth(monthOfYear);
             fecha.setDate(dayOfMonth);
-            if(!fecha.before(unaReserva.getFechaInicio())){
-                unaReserva.setFechaFin(fecha);
-            }
-            else{
-                Toast.makeText(getContext(), "Error: la fecha de fin no puede ser antes que la fecha de inicio", Toast.LENGTH_LONG).show();
-            }
+            unaReserva.setFechaFin(fecha);
         }
     }
 
