@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -20,6 +21,16 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
     private Context ctx;
     private List<Departamento> datos;
     private DepartamentoDAO departamentoDAO;
+
+    private OnDeptoListener listenerOnDepto;
+
+    public interface OnDeptoListener {
+        public void mostrarMapa(int id);
+    }
+
+    public void setListenerOnDepto(OnDeptoListener listener){
+        listenerOnDepto = listener;
+    }
 
     public DepartamentoAdapter(Context contexto, List<Departamento> items) {
         super(contexto, R.layout.fila_depto, items);
@@ -60,6 +71,15 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
         }
         TextView txtTelProp = (TextView) row.findViewById(R.id.telProp);
         txtTelProp.setText("Teléfono propietario: " + departamento.getTelefonoPropietario());
+        Button btnVerEnMapa = (Button) row.findViewById(R.id.btnVerEnMapa);
+        btnVerEnMapa.setTag(departamento.getId());
+        btnVerEnMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = Integer.valueOf(view.getTag().toString());
+                listenerOnDepto.mostrarMapa(id);
+            }
+        });
 
         return (row);
     }

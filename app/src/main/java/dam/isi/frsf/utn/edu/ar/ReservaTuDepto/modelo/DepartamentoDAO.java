@@ -13,4 +13,7 @@ public interface DepartamentoDAO {
 
     @Insert
     long insert(Departamento departamento);
+
+    @Query("SELECT * FROM Departamento WHERE ID_DEPTO = :DeptoID")
+    Departamento buscarPorID(Integer DeptoID);
 }

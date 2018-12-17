@@ -49,4 +49,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/btnVerEnMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver en Mapa" />
+
 </LinearLayout>

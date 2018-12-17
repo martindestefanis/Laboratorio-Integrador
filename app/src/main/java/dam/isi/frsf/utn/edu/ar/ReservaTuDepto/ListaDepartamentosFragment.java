@@ -40,10 +40,26 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
         tvEstadoBusqueda = (TextView) v.findViewById(R.id.estadoBusqueda);
         listaAlojamientos.setOnItemLongClickListener(this);
 
-        departamentoDAO = MyDatabase.getInstance(this.getActivity()).getDepartamentoDAO();
 
+        departamentoDAO = MyDatabase.getInstance(this.getActivity()).getDepartamentoDAO();
         return v;
     }
+
+    DepartamentoAdapter.OnDeptoListener eventosAdapterManager = new DepartamentoAdapter.OnDeptoListener() {
+        @Override
+        public void mostrarMapa(int id) {
+            Fragment f = new MapaFragment();
+            Bundle args = new Bundle();
+            // setear los parametros tipo_mapa y idDepto en el Bundle args
+            args.putInt("tipo_mapa", 2);
+            args.putInt("idDepto", id); //VER
+            f.setArguments(args);
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenido, f)
+                    .commit();
+        }
+    };
 
     @Override
     public void onStart() {
@@ -90,6 +106,7 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
         } else {
             tvEstadoBusqueda.setVisibility(View.GONE);
             departamentosAdapter = new DepartamentoAdapter(getActivity().getApplicationContext(), listaDepartamentos);
+            departamentosAdapter.setListenerOnDepto(eventosAdapterManager);
             listaAlojamientos.setAdapter(departamentosAdapter);
         }
     }

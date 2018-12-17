@@ -2,21 +2,34 @@ package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.AppDatabase;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Departamento;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.DepartamentoDAO;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 
 public class MapaFragment extends SupportMapFragment implements OnMapReadyCallback {
     private GoogleMap miMapa;
     private int tipoMapa = 0;
+    private int idDepto = 0;
     private OnMapaListener listener;
+    private DepartamentoDAO departamentoDAO;
 
     public MapaFragment() {
 
@@ -32,6 +45,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
         Bundle argumentos = getArguments();
         if(argumentos != null) {
             tipoMapa = argumentos .getInt("tipo_mapa",0);
+            idDepto = argumentos.getInt("idDepto",0);
         }
         getMapAsync(this);
         return rootView;
@@ -50,11 +64,11 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
                     }
                 });
                 break;
-            /*case 2:
-                cargarMapaConReclamos();
+            case 2:
+                cargarMapaConUnDepto(idDepto);
                 break;
-            case 3:
-                cargarMapaConUnReclamo(idReclamo);
+           /* case 3:
+                cargarMapaConReclamos();
                 break;
             case 4:
                 addHeatMap();
@@ -79,6 +93,32 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
 
     public interface OnMapaListener {
         public void coordenadasSeleccionadas(LatLng c);
+    }
+
+    public void cargarMapaConUnDepto(final int idDepto){
+        departamentoDAO = MyDatabase.getInstance(getContext()).getDepartamentoDAO();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                final Departamento unDepto = departamentoDAO.buscarPorID(idDepto);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        miMapa.addMarker(new MarkerOptions()
+                                .position(new LatLng(unDepto.getLatitud(),unDepto.getLongitud()))
+                                .title("[" + unDepto.getDescripcion() + "]")
+                                .snippet(unDepto.getDireccion()));
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(new LatLng(unDepto.getLatitud(),unDepto.getLongitud()))
+                                .zoom(15)
+                                .build();
+                        miMapa.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
     }
 
 }
