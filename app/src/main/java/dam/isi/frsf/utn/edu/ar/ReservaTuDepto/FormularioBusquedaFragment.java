@@ -42,9 +42,10 @@ public class FormularioBusquedaFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_formulario_busqueda, container, false);
+
+        getActivity().setTitle("ReservaTuDepto");
 
         ciudadDAO = MyDatabase.getInstance(getContext()).getCiudadDAO();
 
@@ -77,7 +78,7 @@ public class FormularioBusquedaFragment extends Fragment {
         t.start();
 
         tvPrecioMinimo = (TextView) v.findViewById(R.id.txtPrecioMin);
-        tvPrecioMaximo = (TextView ) v.findViewById(R.id.txtPrecioMax);
+        tvPrecioMaximo = (TextView) v.findViewById(R.id.txtPrecioMax);
 
         btnBuscar = (Button) v.findViewById(R.id.btnBuscar);
         btnBuscar.setOnClickListener(btnBusarListener);
@@ -121,14 +122,13 @@ public class FormularioBusquedaFragment extends Fragment {
 
     private SeekBar.OnSeekBarChangeListener listenerSB =  new SeekBar.OnSeekBarChangeListener(){
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress,
-                                      boolean fromUser) {
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if(seekBar.getId()==R.id.precioMin) {
-                tvPrecioMinimo.setText("Precio Minimo "+progress);
+                tvPrecioMinimo.setText("Precio Minimo: $" + progress);
                 frmBusq.setPrecioMinimo(Double.valueOf(progress));
             }
             if(seekBar.getId()==R.id.precioMax) {
-                tvPrecioMaximo.setText("Precio Maximo "+progress);
+                tvPrecioMaximo.setText("Precio Maximo: $" + progress);
                 frmBusq.setPrecioMaximo(Double.valueOf(progress));
             }
         }

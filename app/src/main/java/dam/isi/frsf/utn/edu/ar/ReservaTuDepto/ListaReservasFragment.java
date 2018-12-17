@@ -33,6 +33,8 @@ public class ListaReservasFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_lista_reservas, container, false);
 
+        getActivity().setTitle("Lista de reservas");
+
         listarReservas = (ListView) v.findViewById(R.id.listarReservas);
         tvEstadoBusqueda = (TextView) v.findViewById(R.id.estadoBusquedaReserva);
         reservaDAO = MyDatabase.getInstance(this.getActivity()).getReservaDAO();

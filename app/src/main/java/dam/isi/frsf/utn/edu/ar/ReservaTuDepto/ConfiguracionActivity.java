@@ -16,6 +16,9 @@ public class ConfiguracionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setTitle("Configuración");
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(android.R.id.content, new ConfiguracionFragment())

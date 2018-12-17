@@ -34,6 +34,8 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_lista_departamentos, container, false);
 
+        getActivity().setTitle("Lista de departamentos");
+
         listaAlojamientos = (ListView) v.findViewById(R.id.listaAlojamientos);
         tvEstadoBusqueda = (TextView) v.findViewById(R.id.estadoBusqueda);
         listaAlojamientos.setOnItemLongClickListener(this);

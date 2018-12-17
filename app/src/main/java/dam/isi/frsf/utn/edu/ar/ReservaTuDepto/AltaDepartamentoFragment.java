@@ -48,6 +48,8 @@ public class AltaDepartamentoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_alta_departamento, container, false);
 
+        getActivity().setTitle("Nuevo departamento");
+
         btnMapa = (Button) v.findViewById(R.id.btnMapa);
         tvCoord = (TextView) v.findViewById(R.id.textView9);
         edtCiudad = (EditText) v.findViewById(R.id.edtCiudad);
@@ -170,8 +172,8 @@ public class AltaDepartamentoFragment extends Fragment {
             Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar una capacidad", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(edtPrecio.getText().toString().isEmpty()){
-            Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar un precio", Toast.LENGTH_LONG).show();
+        if(edtPrecio.getText().toString().isEmpty() || Integer.parseInt(edtPrecio.getText().toString()) > 30000){
+            Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar un precio y debe ser menor a $30000", Toast.LENGTH_LONG).show();
             return false;
         }
         if(edtCamas.getText().toString().isEmpty()){
