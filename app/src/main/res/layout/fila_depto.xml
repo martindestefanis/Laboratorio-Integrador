@@ -49,10 +49,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnVerEnMapa"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ver en Mapa" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnReservar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reservar" />
+
+        <Button
+            android:id="@+id/btnVerEnMapa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ver_en_mapa" />
+
+    </LinearLayout>
 
 </LinearLayout>

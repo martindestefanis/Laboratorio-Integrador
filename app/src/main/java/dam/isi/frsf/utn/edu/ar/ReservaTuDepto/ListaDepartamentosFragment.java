@@ -19,7 +19,7 @@ import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.BusquedaFinalizadaListener;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.utils.FormBusqueda;
 
-public class ListaDepartamentosFragment extends Fragment implements BusquedaFinalizadaListener<Departamento>, AdapterView.OnItemLongClickListener {
+public class ListaDepartamentosFragment extends Fragment implements BusquedaFinalizadaListener<Departamento> {
 
     private TextView tvEstadoBusqueda;
     private ListView listaAlojamientos;
@@ -38,8 +38,7 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
 
         listaAlojamientos = (ListView) v.findViewById(R.id.listaAlojamientos);
         tvEstadoBusqueda = (TextView) v.findViewById(R.id.estadoBusqueda);
-        listaAlojamientos.setOnItemLongClickListener(this);
-
+        //listaAlojamientos.setOnItemLongClickListener(this);
 
         departamentoDAO = MyDatabase.getInstance(this.getActivity()).getDepartamentoDAO();
         return v;
@@ -58,6 +57,32 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
                     .beginTransaction()
                     .replace(R.id.contenido, f)
                     .commit();
+        }
+
+        @Override
+        public void reservar(final int id){
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    final Departamento depto = departamentoDAO.buscarPorID(id);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Fragment f = new AltaReservaFragment();
+                            Bundle argumentos = new Bundle();
+                            argumentos.putSerializable("departamentoSeleccionado", depto);
+                            f.setArguments(argumentos);
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.contenido, f)
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                    });
+                }
+            };
+            Thread t = new Thread(r);
+            t.start();
         }
     };
 
@@ -121,7 +146,7 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
         tvEstadoBusqueda.setText(" Buscando..."+msg);
     }
 
-    @Override
+    /*@Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         Departamento selected = (Departamento) departamentosAdapter.getItem(position);
         assert(selected != null);
@@ -135,6 +160,6 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
                 .addToBackStack(null)
                 .commit();
         return false;
-    }
+    }*/
 
 }

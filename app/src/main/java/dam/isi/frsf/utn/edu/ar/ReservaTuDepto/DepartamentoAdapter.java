@@ -26,6 +26,7 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
 
     public interface OnDeptoListener {
         public void mostrarMapa(int id);
+        public void reservar(int id);
     }
 
     public void setListenerOnDepto(OnDeptoListener listener){
@@ -78,6 +79,15 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
             public void onClick(View view) {
                 int id = Integer.valueOf(view.getTag().toString());
                 listenerOnDepto.mostrarMapa(id);
+            }
+        });
+        Button btnReservar = (Button) row.findViewById(R.id.btnReservar);
+        btnReservar.setTag(departamento.getId());
+        btnReservar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = Integer.valueOf(view.getTag().toString());
+                listenerOnDepto.reservar(id);
             }
         });
 
