@@ -1,10 +1,7 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +15,6 @@ import java.util.List;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Ciudad;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.CiudadDAO;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
-
 
 public class DeptosEnMapaFragment extends Fragment {
     private Spinner cmbCiudad;
@@ -38,7 +34,7 @@ public class DeptosEnMapaFragment extends Fragment {
 
         cmbCiudad = (Spinner) v.findViewById(R.id.spinnerCiudad);
         ciudadDAO = MyDatabase.getInstance(this.getActivity()).getCiudadDAO();
-        btnVerEnMapa = (Button) v.findViewById(R.id.btnVerEnMapa);
+        btnVerEnMapa = (Button) v.findViewById(R.id.btnBuscarEnMapa);
 
         Runnable r = new Runnable() {
             @Override
@@ -49,8 +45,6 @@ public class DeptosEnMapaFragment extends Fragment {
                     public void run() {
                         adapterCiudad = new ArrayAdapter<Ciudad>(getContext(), android.R.layout.simple_spinner_item, ciudades);
                         cmbCiudad.setAdapter(adapterCiudad);
-
-
                     }
                 });
             }
@@ -62,7 +56,7 @@ public class DeptosEnMapaFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 item = (Ciudad) parent.getItemAtPosition(pos);
-                Fragment f = new MapaFragment();
+                /*Fragment f = new MapaFragment();
                 Bundle args = new Bundle();
                 // setear los parametros tipo_mapa y idDepto en el Bundle args
                 args.putInt("tipo_mapa", 3);
@@ -72,7 +66,7 @@ public class DeptosEnMapaFragment extends Fragment {
                         .beginTransaction()
                         .replace(R.id.contenido, f)
                         .addToBackStack(null)
-                        .commit();
+                        .commit();*/
             }
 
             @Override
@@ -99,6 +93,5 @@ public class DeptosEnMapaFragment extends Fragment {
         });
 
         return v;
-    };
-
+    }
 }

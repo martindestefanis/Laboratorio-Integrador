@@ -199,6 +199,17 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                                         getActivity().getApplicationContext().sendBroadcast(intent);
                                     }
                                 }
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Fragment f = new ListaReservasFragment();
+                                        getActivity().getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.contenido, f)
+                                                .addToBackStack(null)
+                                                .commit();
+                                    }
+                                });
                             }
                         };
                         Thread t = new Thread(r);
@@ -211,13 +222,6 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                 else{
                     Toast.makeText(getContext(), "Error: Para poder realizar una reserva primero debe configurar su email y nombre de usuario en su perfil.", Toast.LENGTH_LONG).show();
                 }
-
-                Fragment f = new ListaReservasFragment();
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.contenido, f)
-                        .addToBackStack(null)
-                        .commit();
             }
         });
         return v;
