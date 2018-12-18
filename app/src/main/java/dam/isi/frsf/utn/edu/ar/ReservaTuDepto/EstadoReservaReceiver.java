@@ -15,7 +15,7 @@ import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Reserva;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.ReservaDAO;
 
-public class EstadoPedidoReceiver extends BroadcastReceiver {
+public class EstadoReservaReceiver extends BroadcastReceiver {
 
     public static final String ESTADO_CONFIRMADO="dam.isi.frsf.utn.edu.ar.ReservaTuDepto.ESTADO_CONFIRMADO";
     public static final String ESTADO_PENDIENTE="dam.isi.frsf.utn.edu.ar.ReservaTuDepto.PENDIENTE";

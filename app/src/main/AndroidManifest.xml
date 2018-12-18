@@ -30,7 +30,7 @@
         <activity android:name=".ConfiguracionActivity" />
 
         <receiver
-            android:name=".EstadoPedidoReceiver"
+            android:name=".EstadoReservaReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

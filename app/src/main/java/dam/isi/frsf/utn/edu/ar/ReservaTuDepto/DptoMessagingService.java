@@ -1,8 +1,6 @@
 package dam.isi.frsf.utn.edu.ar.ReservaTuDepto;
 
-import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -31,8 +29,8 @@ public class DptoMessagingService extends FirebaseMessagingService {
             if(texto.equals("confirmado")) {
                 r.setEstado(Reserva.Estado.CONFIRMADO);
                 reservaDAO.update(r);
-                Intent i = new Intent(getApplicationContext(),EstadoPedidoReceiver.class);
-                i.setAction(EstadoPedidoReceiver.ESTADO_CONFIRMADO);
+                Intent i = new Intent(getApplicationContext(),EstadoReservaReceiver.class);
+                i.setAction(EstadoReservaReceiver.ESTADO_CONFIRMADO);
                 i.putExtra("idReserva",r.getId());
                 getApplicationContext().sendBroadcast(i);
             }

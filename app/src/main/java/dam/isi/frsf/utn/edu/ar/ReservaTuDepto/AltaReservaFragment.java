@@ -193,8 +193,8 @@ public class AltaReservaFragment extends Fragment implements DatePickerDialog.On
                                     if (re.getEstado().equals(Reserva.Estado.REALIZADO)) {
                                         re.setEstado(Reserva.Estado.PENDIENTE);
                                         reservaDAO.update(re);
-                                        Intent intent = new Intent(getActivity().getApplicationContext(), EstadoPedidoReceiver.class);
-                                        intent.setAction(EstadoPedidoReceiver.ESTADO_PENDIENTE);
+                                        Intent intent = new Intent(getActivity().getApplicationContext(), EstadoReservaReceiver.class);
+                                        intent.setAction(EstadoReservaReceiver.ESTADO_PENDIENTE);
                                         intent.putExtra("idReserva", re.getId());
                                         getActivity().getApplicationContext().sendBroadcast(intent);
                                     }
