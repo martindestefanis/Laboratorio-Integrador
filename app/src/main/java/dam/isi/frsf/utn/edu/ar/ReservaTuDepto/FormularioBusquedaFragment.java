@@ -89,7 +89,13 @@ public class FormularioBusquedaFragment extends Fragment {
     private View.OnClickListener btnBusarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            frmBusq.setPermiteFumar(swFumadores.isSelected());
+            if(swFumadores.isChecked()){
+                frmBusq.setPermiteFumar(true);
+                Log.d("asd", "fumar: si");
+            }else{
+                frmBusq.setPermiteFumar(false);
+                Log.d("asd", "fumar: no");
+            }
             Integer huespedes = null;
             try {
                 huespedes = Integer.parseInt(txtHuespedes.getText().toString());

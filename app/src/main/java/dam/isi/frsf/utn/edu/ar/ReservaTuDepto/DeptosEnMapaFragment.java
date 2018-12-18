@@ -76,7 +76,7 @@ public class DeptosEnMapaFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.contenido, f)
-                        .addToBackStack(null)
+                        .addToBackStack("@string/tagformBusqueda")
                         .commit();
             }
         });

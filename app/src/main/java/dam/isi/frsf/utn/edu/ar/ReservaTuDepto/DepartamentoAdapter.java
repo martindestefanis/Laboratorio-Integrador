@@ -56,7 +56,7 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
         TextView txtPrecio = (TextView) row.findViewById(R.id.precio);
         txtPrecio.setText("Precio: $" + (df.format(departamento.getPrecio())));
         TextView txtCapacidad = (TextView) row.findViewById(R.id.capacidadMax);
-        txtCapacidad.setText("Capacidad: " + departamento.getCapacidadMaxima()+".");
+        txtCapacidad.setText("Capacidad: " + departamento.getCapacidadMaxima());
         TextView txtDireccion = (TextView) row.findViewById(R.id.direccion);
         txtDireccion.setText("Dirección: " + departamento.getDireccion());
         TextView txtCantHab = (TextView) row.findViewById(R.id.cantHabitaciones);

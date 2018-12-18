@@ -52,7 +52,7 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
                     continue;
                 if ( busquedaActual.getCiudad() != null && !busquedaActual.getCiudad().equals(depto.getCiudad()))
                     continue;
-                if ( busquedaActual.getPermiteFumar() && depto.getNoFumador())
+                if ( !busquedaActual.getPermiteFumar().equals(depto.getNoFumador()))
                     continue;
                 resultado.add(depto);
             }

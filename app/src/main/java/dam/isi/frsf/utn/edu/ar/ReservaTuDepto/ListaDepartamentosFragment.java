@@ -38,7 +38,6 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
 
         listaAlojamientos = (ListView) v.findViewById(R.id.listaAlojamientos);
         tvEstadoBusqueda = (TextView) v.findViewById(R.id.estadoBusqueda);
-        //listaAlojamientos.setOnItemLongClickListener(this);
 
         departamentoDAO = MyDatabase.getInstance(this.getActivity()).getDepartamentoDAO();
         return v;
@@ -146,20 +145,5 @@ public class ListaDepartamentosFragment extends Fragment implements BusquedaFina
         tvEstadoBusqueda.setText(" Buscando..."+msg);
     }
 
-    /*@Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Departamento selected = (Departamento) departamentosAdapter.getItem(position);
-        assert(selected != null);
-        Fragment f = new AltaReservaFragment();
-        Bundle argumentos = new Bundle();
-        argumentos.putSerializable("departamentoSeleccionado",selected);
-        f.setArguments(argumentos);
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.contenido, f)
-                .addToBackStack(null)
-                .commit();
-        return false;
-    }*/
 
 }
