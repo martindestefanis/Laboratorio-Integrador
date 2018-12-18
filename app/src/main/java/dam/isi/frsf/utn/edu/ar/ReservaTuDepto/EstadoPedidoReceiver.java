@@ -34,8 +34,8 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
                     Reserva reserva = reservaDAO.buscarPorID(intent.getExtras().getInt("idReserva"));
                     if (intent.getAction().equals(ESTADO_CONFIRMADO)) {
                         //Toast.makeText(context,"Reserva para " + reserva.getUsuario + " ha cambiado de estado a " + reserva.getEstado() ,Toast.LENGTH_LONG).show();
-                        Intent destino = new Intent(context, AltaReservaFragment.class);
-                        destino.putExtra("idReservaSeleccionado", reserva.getId());
+                        Intent destino = new Intent(context, MainActivity.class);
+                        destino.putExtra("idReservaSeleccionada", reserva.getId());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, destino, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -55,8 +55,8 @@ public class EstadoPedidoReceiver extends BroadcastReceiver {
                     }
 
                     if(intent.getAction().equals(ESTADO_PENDIENTE)){
-                        Intent destino= new Intent(context,AltaReservaFragment.class);
-                        destino.putExtra("idReservaSeleccionada",reserva.getId());
+                        Intent destino= new Intent(context, MainActivity.class);
+                        destino.putExtra("idReservaSeleccionada", reserva.getId());
                         intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,destino,PendingIntent.FLAG_UPDATE_CURRENT);
 

@@ -31,12 +31,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FormularioBusquedaFragment fragmentInicio = new FormularioBusquedaFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.contenido, fragmentInicio)
-                .addToBackStack("@string/tagformBusqueda")
-                .commit();
+        Intent i = getIntent();
+        if(i.getExtras() != null){
+            ListaReservasFragment fragment = new ListaReservasFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("idReserva", i.getExtras().getInt("idReservaSeleccionada"));
+            fragment.setArguments(bundle);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenido, fragment)
+                    .addToBackStack("@string/tagformBusqueda")
+                    .commit();
+        }
+        else{
+            FormularioBusquedaFragment fragmentInicio = new FormularioBusquedaFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenido, fragmentInicio)
+                    .addToBackStack("@string/tagformBusqueda")
+                    .commit();
+        }
     }
 
     @Override

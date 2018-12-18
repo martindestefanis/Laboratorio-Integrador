@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.MyDatabase;
+import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.Reserva;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.ReservaDAO;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioConReservas;
 import dam.isi.frsf.utn.edu.ar.ReservaTuDepto.modelo.UsuarioDAO;
@@ -23,6 +26,7 @@ public class ListaReservasFragment extends Fragment {
     private UsuarioConReservas usuarioConReservas;
     private ReservaDAO reservaDAO;
     private UsuarioDAO usuarioDAO;
+    private List<Reserva> unaReserva;
 
     public ListaReservasFragment() {
         // Required empty public constructor
@@ -48,35 +52,37 @@ public class ListaReservasFragment extends Fragment {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-                String email = prefs.getString("correo_preference","");
-                String nombre = prefs.getString("nombre_preference", "");
-                usuarioConReservas = usuarioDAO.buscarUsuarioConReservas(email, nombre);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(usuarioConReservas == null || usuarioConReservas.reservas.isEmpty()) {
-                            tvEstadoBusqueda.setText("No se encontraron resultados");
+                Bundle argumentos = getArguments();
+                if(argumentos != null) {
+                    int idReserva = argumentos.getInt("idReserva",0);
+                    unaReserva = reservaDAO.buscarPorIDLista(idReserva);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            reservaAdapter = new ReservaAdapter(getActivity().getApplicationContext(), unaReserva);
+                            listarReservas.setAdapter(reservaAdapter);
                         }
-                        else {
-                            tvEstadoBusqueda.setVisibility(View.GONE);
-                            Runnable r1 = new Runnable() {
-                                @Override
-                                public void run() {
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            reservaAdapter = new ReservaAdapter(getActivity().getApplicationContext(), usuarioConReservas.reservas);
-                                            listarReservas.setAdapter(reservaAdapter);
-                                        }
-                                    });
-                                }
-                            };
-                            Thread t1 = new Thread(r1);
-                            t1.start();
+                    });
+                }
+                else{
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    String email = prefs.getString("correo_preference","");
+                    String nombre = prefs.getString("nombre_preference", "");
+                    usuarioConReservas = usuarioDAO.buscarUsuarioConReservas(email, nombre);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(usuarioConReservas == null || usuarioConReservas.reservas.isEmpty()) {
+                                tvEstadoBusqueda.setText("No se encontraron resultados");
+                            }
+                            else {
+                                tvEstadoBusqueda.setVisibility(View.GONE);
+                                reservaAdapter = new ReservaAdapter(getActivity().getApplicationContext(), usuarioConReservas.reservas);
+                                listarReservas.setAdapter(reservaAdapter);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         };
         Thread t = new Thread(r);

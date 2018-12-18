@@ -15,6 +15,9 @@ public interface ReservaDAO {
     @Query("SELECT * FROM Reserva WHERE ID_RESERVA = :ReservaID")
     Reserva buscarPorID(Integer ReservaID);
 
+    @Query("SELECT * FROM Reserva WHERE ID_RESERVA = :ReservaID")
+    List<Reserva> buscarPorIDLista(Integer ReservaID);
+
     @Query("SELECT * FROM Reserva WHERE depto_ID_DEPTO = :DeptoID")
     List<Reserva> buscarPorDepto(Integer DeptoID);
 
