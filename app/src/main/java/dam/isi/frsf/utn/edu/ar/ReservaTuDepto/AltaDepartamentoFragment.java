@@ -128,23 +128,28 @@ public class AltaDepartamentoFragment extends Fragment {
                             }
 
                             departamentoDAO.insert(departamento);
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvCoord.setText("");
+                                    edtCiudad.setText("");
+                                    edtDireccion.setText("");
+                                    edtPrecio.setText("");
+                                    edtDescripcion.setText("");
+                                    edtCapacidad.setText("");
+                                    chbFumador.setChecked(false);
+                                    edtHabitaciones.setText("");
+                                    edtCamas.setText("");
+                                    edtTelefono.setText("");
+                                }
+                            });
                         }
                     };
                     Thread t = new Thread(r);
                     t.start();
 
                     Toast.makeText(getActivity().getApplicationContext(), "Departamento guardado correctamente", Toast.LENGTH_LONG).show();
-
-                    tvCoord.setText("");
-                    edtCiudad.setText("");
-                    edtDireccion.setText("");
-                    edtPrecio.setText("");
-                    edtDescripcion.setText("");
-                    edtCapacidad.setText("");
-                    chbFumador.setChecked(false);
-                    edtHabitaciones.setText("");
-                    edtCamas.setText("");
-                    edtTelefono.setText("");
                 }
             }
         });
