@@ -30,6 +30,7 @@ public class AltaDepartamentoFragment extends Fragment {
     private CiudadDAO ciudadDAO;
     private Departamento departamento;
     private Ciudad ciudad;
+    private Boolean hayCiudad = false;
 
     public interface OnNuevoLugarListener {
         public void obtenerCoordenadas();
@@ -109,17 +110,23 @@ public class AltaDepartamentoFragment extends Fragment {
                                     if(c.getNombre().equals(edtCiudad.getText().toString().toUpperCase())){
                                         ciudad = ciudadDAO.buscarPorID(c.getId());
                                         departamento.setCiudad(ciudad);
+                                        hayCiudad = true;
+                                        break;
                                     }
                                     else {
-                                        ciudad = new Ciudad();
-                                        ciudad.setNombre(edtCiudad.getText().toString().toUpperCase());
-                                        long id = ciudadDAO.insert(ciudad);
-                                        ciudad = ciudadDAO.buscarPorID(id);
-                                        departamento.setCiudad(ciudad);
+                                        hayCiudad = false;
                                     }
                                 }
                             }
                             else{
+                                ciudad = new Ciudad();
+                                ciudad.setNombre(edtCiudad.getText().toString().toUpperCase());
+                                long id = ciudadDAO.insert(ciudad);
+                                ciudad = ciudadDAO.buscarPorID(id);
+                                departamento.setCiudad(ciudad);
+                            }
+
+                            if(!hayCiudad){
                                 ciudad = new Ciudad();
                                 ciudad.setNombre(edtCiudad.getText().toString().toUpperCase());
                                 long id = ciudadDAO.insert(ciudad);
