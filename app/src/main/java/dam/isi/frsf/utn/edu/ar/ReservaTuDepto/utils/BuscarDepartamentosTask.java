@@ -38,24 +38,25 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
     protected List<Departamento> doInBackground(FormBusqueda... busqueda) {
         Log.i("size departamentos", todos.size() + "");
         List<Departamento> resultado = new ArrayList<Departamento>();
-        String ciudadBuscada = busqueda[0].getCiudad().toString();
-        FormBusqueda busquedaActual = busqueda[0];
+        if(busqueda[0].getCiudad()==null) {
+            return resultado;
+        }else{
+            FormBusqueda busquedaActual = busqueda[0];
 
-        for( Departamento d: todos ){
-            Log.i("resul", ciudadBuscada.equals(d.getCiudad().toString()) + "");
-            if(
-                (busquedaActual.getPermiteFumar() == ! d.getNoFumador()) &&
-                        (ciudadBuscada.equals(d.getCiudad().toString())) &&
-                        (busquedaActual.getHuespedes() == null || busquedaActual.getHuespedes() >= d.getCapacidadMaxima())&&
-                        (busquedaActual.getPrecioMaximo() == null   ||  busquedaActual.getPrecioMaximo() >= d.getPrecio()) &&
-                        (busquedaActual.getPrecioMinimo() == null   ||   busquedaActual.getPrecioMinimo() <= d.getPrecio())
-                )
-            {
-                resultado.add(d);
-
+            for(Departamento depto : todos){
+                if ( busquedaActual.getHuespedes() != null && busquedaActual.getHuespedes() > depto.getCapacidadMaxima())
+                    continue;
+                if ( busquedaActual.getPrecioMinimo() != null && busquedaActual.getPrecioMinimo() > depto.getPrecio())
+                    continue;
+                if ( busquedaActual.getPrecioMaximo() != null && busquedaActual.getPrecioMaximo() < depto.getPrecio())
+                    continue;
+                if ( busquedaActual.getCiudad() != null && !busquedaActual.getCiudad().equals(depto.getCiudad()))
+                    continue;
+                if ( busquedaActual.getPermiteFumar() && depto.getNoFumador())
+                    continue;
+                resultado.add(depto);
             }
         }
-
         return resultado;
     }
 }

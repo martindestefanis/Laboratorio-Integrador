@@ -56,17 +56,6 @@ public class DeptosEnMapaFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 item = (Ciudad) parent.getItemAtPosition(pos);
-                /*Fragment f = new MapaFragment();
-                Bundle args = new Bundle();
-                // setear los parametros tipo_mapa y idDepto en el Bundle args
-                args.putInt("tipo_mapa", 3);
-                args.putInt("idCiudad", item.getId()); //VER
-                f.setArguments(args);
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.contenido, f)
-                        .addToBackStack(null)
-                        .commit();*/
             }
 
             @Override

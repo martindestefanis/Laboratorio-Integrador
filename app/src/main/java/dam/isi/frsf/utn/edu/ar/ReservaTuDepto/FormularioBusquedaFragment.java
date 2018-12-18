@@ -114,7 +114,6 @@ public class FormularioBusquedaFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             Ciudad item = (Ciudad) parent.getItemAtPosition(pos);
             frmBusq.setCiudad(item);
-            Log.d("MainActivity","ciudad seteada "+item);
         }
         public void onNothingSelected(AdapterView<?> parent) {
         }
